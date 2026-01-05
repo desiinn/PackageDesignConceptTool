@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パッケージデザインコンセプトシート作成ツール</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>パッケージデザインコンセプトシート作成ツール</h1>
+            <p>食品パッケージのデザインイメージを可視化し、共有しましょう</p>
+        </div>
+        
+        <div class="content">
+            <!-- Step 0: 製品名入力 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="step-number">0</span>
+                    製品名
+                </div>
+                <div class="input-group">
+                    <label for="productName">製品名を入力してください</label>
+                    <input type="text" id="productName" placeholder="例：北海道産小麦使用 プレミアムパン">
+                </div>
+            </div>
+            
+            <!-- Step 1: キーワード選択 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="step-number">1</span>
+                    イメージキーワード選択
+                </div>
+                <div class="info-box">
+                    <p>製品のイメージに近いキーワードを選択してください（複数選択可）</p>
+                </div>
+                <div class="keywords-grid" id="keywordsGrid">
+                    <button class="keyword-btn" data-keyword="luxury">高級感</button>
+                    <button class="keyword-btn" data-keyword="natural">ナチュラル</button>
+                    <button class="keyword-btn" data-keyword="traditional">伝統的</button>
+                    <button class="keyword-btn" data-keyword="modern">モダン</button>
+                    <button class="keyword-btn" data-keyword="cute">かわいい</button>
+                    <button class="keyword-btn" data-keyword="simple">シンプル</button>
+                    <button class="keyword-btn" data-keyword="warm">温かい</button>
+                    <button class="keyword-btn" data-keyword="fresh">爽やか</button>
+                    <button class="keyword-btn" data-keyword="powerful">力強い</button>
+                    <button class="keyword-btn" data-keyword="elegant">優雅</button>
+                    <button class="keyword-btn" data-keyword="refreshing">フレッシュ</button>
+                    <button class="keyword-btn" data-keyword="retro">レトロ</button>
+                    <button class="keyword-btn" data-keyword="hokkaido">北海道らしさ</button>
+                    <button class="keyword-btn" data-keyword="handmade">手作り感</button>
+                    <button class="keyword-btn" data-keyword="healthy">健康的</button>
+                    <button class="keyword-btn" data-keyword="premium">プレミアム</button>
+                </div>
+            </div>
+            
+            <!-- Step 2&3: 画像表示と選択 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="step-number">2</span>
+                    イメージに近い画像を選択
+                    <span class="selected-count" id="selectedCount">0/10枚選択</span>
+                </div>
+                <div class="info-box">
+                    <p>イメージに近い画像を5〜10枚選択してください。画像をクリックして選択/解除できます。</p>
+                </div>
+                <div class="images-grid" id="imagesGrid">
+                    <div class="no-images">キーワードを選択すると、関連する画像が表示されます</div>
+                </div>
+            </div>
+            
+            <!-- Step 4: 参考製品 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="step-number">3</span>
+                    参考となる既存製品
+                </div>
+                <div class="input-group">
+                    <label for="referenceProducts">参考にしたい既存製品がありましたら記入してください（任意）</label>
+                    <textarea id="referenceProducts" placeholder="例：〇〇社の△△という商品のパッケージデザインが参考になります。理由は..."></textarea>
+                </div>
+            </div>
+            
+            <!-- Step 5: その他備考 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="step-number">4</span>
+                    その他備考
+                </div>
+                <div class="input-group">
+                    <label for="remarks">その他、デザインに関する要望や補足事項があれば記入してください（任意）</label>
+                    <textarea id="remarks" placeholder="例：ターゲット層は30-40代女性です。贈答用としても使えるデザインを希望します。"></textarea>
+                </div>
+            </div>
+            
+            <!-- アクションボタン -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="generateConceptSheet()">コンセプトシートを生成</button>
+                <button class="btn btn-secondary" onclick="resetAll()">すべてリセット</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- コンセプトシート表示エリア -->
+    <div class="concept-sheet" id="conceptSheet">
+        <div class="sheet-header">
+            <h2>パッケージデザインコンセプトシート</h2>
+            <p id="sheetProductName"></p>
+            <p style="color: #999; font-size: 14px;">作成日: <span id="sheetDate"></span></p>
+        </div>
+        
+        <div class="sheet-section">
+            <h3>選択キーワード</h3>
+            <div class="sheet-keywords" id="sheetKeywords"></div>
+        </div>
+        
+        <div class="sheet-section">
+            <h3>参考画像</h3>
+            <div class="sheet-images" id="sheetImages"></div>
+        </div>
+        
+        <div class="sheet-section" id="sheetReferenceSection" style="display:none;">
+            <h3>参考既存製品</h3>
+            <div class="sheet-text" id="sheetReference"></div>
+        </div>
+        
+        <div class="sheet-section" id="sheetRemarksSection" style="display:none;">
+            <h3>その他備考</h3>
+            <div class="sheet-text" id="sheetRemarks"></div>
+        </div>
+        
+        <div class="action-buttons" style="margin-top: 30px;">
+            <button class="btn btn-primary" onclick="window.print()">印刷 / PDFとして保存</button>
+            <button class="btn btn-secondary" onclick="closeConceptSheet()">閉じる</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
