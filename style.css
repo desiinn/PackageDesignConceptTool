@@ -1,0 +1,366 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.content {
+    padding: 40px;
+}
+
+.section {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #667eea;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.step-number {
+    background: #667eea;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.input-group input[type="text"],
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.input-group input[type="text"]:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.input-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+.keywords-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.keyword-btn {
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    text-align: center;
+}
+
+.keyword-btn:hover {
+    border-color: #667eea;
+    background: #f5f7ff;
+}
+
+.keyword-btn.selected {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.image-card {
+    position: relative;
+    border: 3px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    aspect-ratio: 1;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.image-card.selected {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+.image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-card .select-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #667eea;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.image-card.selected .select-badge {
+    display: flex;
+}
+
+.no-images {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-size: 16px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0;
+}
+
+.info-box {
+    background: #f5f7ff;
+    border-left: 4px solid #667eea;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.info-box p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.selected-count {
+    display: inline-block;
+    background: #667eea;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+/* コンセプトシート用のスタイル */
+.concept-sheet {
+    display: none;
+    background: white;
+    padding: 40px;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.concept-sheet.visible {
+    display: block;
+}
+
+.sheet-header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 20px;
+}
+
+.sheet-header h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.sheet-section {
+    margin-bottom: 30px;
+}
+
+.sheet-section h3 {
+    background: #667eea;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.sheet-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sheet-keyword {
+    background: #f5f7ff;
+    border: 2px solid #667eea;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.sheet-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.sheet-images img {
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+}
+
+.sheet-text {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .content {
+        padding: 20px;
+    }
+    
+    .keywords-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .sheet-images {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 印刷用スタイル */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    
+    .container {
+        box-shadow: none;
+    }
+    
+    .action-buttons {
+        display: none;
+    }
+}
