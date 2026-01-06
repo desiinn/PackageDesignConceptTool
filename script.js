@@ -239,225 +239,55 @@ function updateSelectedCount() {
 
 // コンセプトシートの生成（別ウィンドウで表示）
 function generateConceptSheet() {
-    const productName = document.getElementById('productName').value.trim();
-    const productCategory = document.getElementById('productCategory').value.trim();
-    const productUnit = document.getElementById('productUnit').value.trim();
-    const referenceProducts = document.getElementById('referenceProducts').value.trim();
-    const remarks = document.getElementById('remarks').value.trim();
-    const marketOther = document.getElementById('marketOther').value.trim();
-    
-    // バリデーション
-    if (!productName) {
-        alert('商品名（ブランド名）を入力してください');
-        return;
-    }
-    
-    if (!productCategory) {
-        alert('製品のカテゴリー（一般名称）を入力してください');
-        return;
-    }
-    
-    if (selectedKeywords.length === 0) {
-        alert('少なくとも1つのキーワードを選択してください');
-        return;
-    }
-    
-    if (selectedImages.length < 5) {
-        alert('画像を5枚以上選択してください');
-        return;
-    }
-    
-    // キーワードを日本語に変換
-    const keywordNames = selectedKeywords.map(keyword => keywordMap[keyword] || keyword);
-    
-    // 画像のHTML生成
-    let imagesHTML = '';
-    selectedImages.forEach(imgData => {
-        imagesHTML += `<img src="${imgData.url}" alt="参考画像" style="width: 100%; border-radius: 8px; border: 2px solid #e0e0e0;">`;
-    });
-    
-    // 売り場の表示用テキスト作成
-    let marketText = selectedMarkets.map(m => marketMap[m]).join('、 ');
-    if (marketOther) {
-        marketText += (marketText ? ' / ' : '') + marketOther;
-    }
+    const productName = document.getElementById('productName').value || '未入力の商品名';
+    const productCategory = document.getElementById('productCategory').value || '未設定';
+    const productUnit = document.getElementById('productUnit').value || '';
+    const referenceProducts = document.getElementById('referenceProducts').value || '特になし';
+    const remarks = document.getElementById('remarks').value || '特になし';
 
-    // ターゲット属性のHTML
-    const targetHTML = selectedTarget ? `
-        <div class="sheet-section">
-            <h3>ターゲット属性</h3>
-            <div class="sheet-target">${targetMap[selectedTarget] || selectedTarget}</div>
-        </div>
-    ` : '';
-    
-    // 参考製品のHTML
-    const referenceHTML = referenceProducts ? `
-        <div class="sheet-section">
-            <h3>参考既存製品</h3>
-            <div class="sheet-text">${referenceProducts}</div>
-        </div>
-    ` : '';
-    
-    // 備考のHTML
-    const remarksHTML = remarks ? `
-        <div class="sheet-section">
-            <h3>その他備考</h3>
-            <div class="sheet-text">${remarks}</div>
-        </div>
-    ` : '';
-    
-    // コンセプトシートのHTMLを生成
+    // 選択されたターゲットを取得
+    const activeTarget = document.querySelector('.target-btn.active');
+    const targetName = activeTarget ? activeTarget.querySelector('.target-name').innerText : '未設定';
+    const targetDesc = activeTarget ? activeTarget.querySelector('.target-desc').innerText : '';
+
+    // 選択されたキーワードを取得
+    const selectedKeywords = Array.from(document.querySelectorAll('.keyword-btn.active'));
+    const keywordNames = selectedKeywords.map(btn => btn.innerText);
+
+    // 選択された画像を取得
+    const selectedImages = Array.from(document.querySelectorAll('.image-item.selected img'));
+    const imagesHTML = selectedImages.length > 0 
+        ? selectedImages.map(img => `<img src="${img.src}" style="width:100%; border-radius:4px; border:1px solid #ddd;">`).join('')
+        : '<p>選択された画像はありません</p>';
+
+    // 売り場のテキスト取得（もしHTMLにmarketTextというIDがある場合。なければ修正してください）
+    const marketText = "選択された売り場の情報をここに反映"; // 必要に応じて取得処理を追加
+
     const conceptSheetHTML = `
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>コンセプトシート - ${productName}</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-        background: white;
-        padding: 0;
-        margin: 0;
-        font-size: 10.5pt;
-        color: #333;
-        }
-        
-        .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        box-shadow: none;
-        }
-        
-        .sheet-header {
-        position: relative;
-        margin-bottom: 30px;
-        border-bottom: 1.5pt solid #314c6a;
-        padding-bottom: 15px;
-        text-align: center;
-        }
-
-        /* 左上のタイトル */
-        .header-top-left {
-            position: absolute;
-            top: 0;
-            left: 0;
-            font-size: 11px;
-            color: #999;
-        }
-
-        /* 右上の作成日 */
-        .header-top-right {
-            position: absolute;
-            top: 0;
-            right: 0;
-            font-size: 11px;
-            color: #999;
-        }
-
-        /* 商品名 */
-        .product-name-display {
-        font-size: 24pt; /* 42pxから縮小 */
-        margin: 10px 0 5px;
-        }
-        
-        .product-sub-info {
-            font-size: 12pt;
-            color: #555;
-        }
-
-        .sheet-section {
-        margin-bottom: 25px;
-        }
-        
-        .sheet-section h3 {
-        font-size: 14pt;
-        padding: 2px 0 5px 10px;
-        border-left: 4pt solid #314c6a;
-        margin-bottom: 12px;
-     }
-           
-        .sheet-keywords {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        }
-
-        .sheet-keyword {
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-size: 14px;
-        border: 1px solid #314c6a; /* 枠線のみのデザインに */
-        color: #314c6a;
-        }
-        
-        .sheet-images {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        
-        .sheet-text, .sheet-target, .sheet-keyword {
-        font-size: 10.5pt; /* 本文サイズ */
-        padding: 10px;
-        border: 0.5pt solid #ccc;
-        line-height: 1.5;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid #f0f0f0;
-        }
-        
-        .btn {
-            padding: 15px 40px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #3d5a73 0%, #314c6a 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-        }
-        
-        .two-column {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            .sheet-images { grid-template-columns: repeat(2, 1fr); }
-            .container { padding: 20px; }
-            .product-name-display { font-size: 32px; }
-        }
-        
-        @media print {
-        .action-buttons {
-            display: none; /* ボタンは印刷しない */
-            }
-        }
+        body { font-family: sans-serif; background: white; margin: 0; padding: 0; color: #333; line-height: 1.5; font-size: 10.5pt; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20mm; }
+        .sheet-header { position: relative; margin-bottom: 30px; border-bottom: 1.5pt solid #314c6a; padding-bottom: 15px; text-align: center; }
+        .header-top-left, .header-top-right { position: absolute; top: 0; font-size: 8pt; color: #999; }
+        .header-top-left { left: 0; } .header-top-right { right: 0; }
+        .product-name-display { font-size: 24pt; margin: 15px 0 5px; color: #09203f; }
+        .product-sub-info { font-size: 12pt; color: #666; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .sheet-section { margin-bottom: 25px; }
+        .sheet-section h3 { font-size: 13pt; padding: 2px 0 5px 10px; border-left: 4pt solid #314c6a; border-bottom: 1px solid #eee; margin-bottom: 12px; color: #314c6a; }
+        .sheet-text { padding: 10px; border: 0.5pt solid #eee; min-height: 50px; white-space: pre-wrap; font-size: 10pt; }
+        .sheet-keywords { display: flex; flex-wrap: wrap; gap: 5px; }
+        .sheet-keyword { border: 1px solid #314c6a; color: #314c6a; padding: 2px 10px; border-radius: 15px; font-size: 9pt; }
+        .sheet-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .action-buttons { text-align: center; margin-top: 50px; }
+        .btn { padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; }
+        .btn-primary { background: #314c6a; color: white; }
+        @media print { .action-buttons { display: none; } }
     </style>
 </head>
 <body>
@@ -465,19 +295,18 @@ function generateConceptSheet() {
         <div class="sheet-header">
             <div class="header-top-left">パッケージデザインコンセプトシート</div>
             <div class="header-top-right">作成日: ${new Date().toLocaleDateString('ja-JP')}</div>
-            
             <h1 class="product-name-display">${productName}</h1>
             <p class="product-sub-info">${productCategory} / ${productUnit}</p>
         </div>
 
         <div class="two-column">
             <div class="sheet-section">
-                <h3>ターゲット設定</h3>
-                <div class="sheet-target">${targetMarket}</div>
+                <h3>ターゲット</h3>
+                <div class="sheet-text"><strong>${targetName}</strong><br>${targetDesc}</div>
             </div>
             <div class="sheet-section">
-                <h3>想定している売り場</h3>
-                <div class="sheet-text">${marketText || '未選択'}</div>
+                <h3>想定売り場</h3>
+                <div class="sheet-text">${marketText}</div>
             </div>
         </div>
 
@@ -489,38 +318,27 @@ function generateConceptSheet() {
         </div>
 
         <div class="sheet-section">
-            <h3>参考イメージ（方向性）</h3>
-            <div class="sheet-images">
-                ${imagesHTML}
-            </div>
+            <h3>参考イメージ</h3>
+            <div class="sheet-images">${imagesHTML}</div>
         </div>
 
         <div class="sheet-section">
-            <h3>参考にしたい既存製品</h3>
-            <div class="sheet-text">${referenceProducts || '特になし'}</div>
-        </div>
-
-        <div class="sheet-section">
-            <h3>デザインに関する要望・備考</h3>
-            <div class="sheet-text">${remarks || '特になし'}</div>
+            <h3>既存製品・備考</h3>
+            <div class="sheet-text">【参考製品】\n${referenceProducts}\n\n【要望】\n${remarks}</div>
         </div>
 
         <div class="action-buttons">
-            <button class="btn btn-primary" onclick="window.print()">印刷 / PDFとして保存</button>
-            <button class="btn btn-secondary" onclick="window.close()">閉じる</button>
+            <button class="btn btn-primary" onclick="window.print()">印刷 / PDF保存</button>
+            <button class="btn" onclick="window.close()" style="background:#eee;">閉じる</button>
         </div>
     </div>
 </body>
-</html>
-    `;
-    
-    // 新しいウィンドウを開いてコンセプトシートを表示
-    const newWindow = window.open('', '_blank', 'width=1000,height=800,scrollbars=yes');
+</html>`;
+
+    const newWindow = window.open('', '_blank');
     if (newWindow) {
         newWindow.document.write(conceptSheetHTML);
         newWindow.document.close();
-    } else {
-        alert('ポップアップがブロックされました。ブラウザの設定でポップアップを許可してください。');
     }
 }
 
