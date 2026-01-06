@@ -257,79 +257,6 @@ body {
     margin-left: 10px;
 }
 
-/* コンセプトシート用のスタイル */
-.concept-sheet {
-    display: none;
-    background: white;
-    padding: 40px;
-    max-width: 900px;
-    margin: 20px auto;
-}
-
-.concept-sheet.visible {
-    display: block;
-}
-
-.sheet-header {
-    text-align: center;
-    margin-bottom: 40px;
-    border-bottom: 3px solid #667eea;
-    padding-bottom: 20px;
-}
-
-.sheet-header h2 {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.sheet-section {
-    margin-bottom: 30px;
-}
-
-.sheet-section h3 {
-    background: #667eea;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    font-size: 18px;
-}
-
-.sheet-keywords {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.sheet-keyword {
-    background: #f5f7ff;
-    border: 2px solid #667eea;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-}
-
-.sheet-images {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.sheet-images img {
-    width: 100%;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
-}
-
-.sheet-text {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
-    line-height: 1.8;
-    white-space: pre-wrap;
-}
-
 /* レスポンシブデザイン */
 @media (max-width: 768px) {
     .content {
@@ -342,25 +269,5 @@ body {
     
     .images-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-    
-    .sheet-images {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* 印刷用スタイル */
-@media print {
-    body {
-        background: white;
-        padding: 0;
-    }
-    
-    .container {
-        box-shadow: none;
-    }
-    
-    .action-buttons {
-        display: none;
     }
 }

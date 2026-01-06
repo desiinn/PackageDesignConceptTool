@@ -1,6 +1,6 @@
 // 画像ファイル名リスト（タグ付き）
 // ファイル名の形式: keyword1_keyword2_keyword3.jpg
-// 例: luxury_modern_simple.jpg
+// 例: luxury_elegant_minimal.jpg
 const pictImages = [
     "luxury_elegant_minimal.jpg",
     "luxury_modern_simple.jpg",
@@ -166,7 +166,7 @@ function updateSelectedCount() {
     document.getElementById('selectedCount').textContent = `${count}/10枚選択`;
 }
 
-// コンセプトシートの生成
+// コンセプトシートの生成（別ウィンドウで表示）
 function generateConceptSheet() {
     const productName = document.getElementById('productName').value.trim();
     const referenceProducts = document.getElementById('referenceProducts').value.trim();
@@ -188,49 +188,235 @@ function generateConceptSheet() {
         return;
     }
     
-    // コンセプトシートに情報を設定
-    document.getElementById('sheetProductName').textContent = productName;
-    document.getElementById('sheetDate').textContent = new Date().toLocaleDateString('ja-JP');
+    // キーワードを日本語に変換
+    const keywordNames = selectedKeywords.map(keyword => keywordMap[keyword] || keyword);
     
-    // キーワードを表示（英語キーから日本語に変換）
-    const keywordsContainer = document.getElementById('sheetKeywords');
-    keywordsContainer.innerHTML = '';
-    selectedKeywords.forEach(keyword => {
-        const span = document.createElement('span');
-        span.className = 'sheet-keyword';
-        span.textContent = keywordMap[keyword] || keyword;
-        keywordsContainer.appendChild(span);
-    });
-    
-    // 画像を表示
-    const imagesContainer = document.getElementById('sheetImages');
-    imagesContainer.innerHTML = '';
+    // 画像のHTML生成
+    let imagesHTML = '';
     selectedImages.forEach(imgData => {
-        const img = document.createElement('img');
-        img.src = imgData.url;
-        img.alt = '参考画像';
-        imagesContainer.appendChild(img);
+        imagesHTML += `<img src="${imgData.url}" alt="参考画像" style="width: 100%; border-radius: 8px; border: 2px solid #e0e0e0;">`;
     });
     
-    // 参考製品
-    if (referenceProducts) {
-        document.getElementById('sheetReferenceSection').style.display = 'block';
-        document.getElementById('sheetReference').textContent = referenceProducts;
-    } else {
-        document.getElementById('sheetReferenceSection').style.display = 'none';
-    }
+    // 参考製品のHTML
+    const referenceHTML = referenceProducts ? `
+        <div class="sheet-section">
+            <h3>参考既存製品</h3>
+            <div class="sheet-text">${referenceProducts}</div>
+        </div>
+    ` : '';
     
-    // 備考
-    if (remarks) {
-        document.getElementById('sheetRemarksSection').style.display = 'block';
-        document.getElementById('sheetRemarks').textContent = remarks;
-    } else {
-        document.getElementById('sheetRemarksSection').style.display = 'none';
-    }
+    // 備考のHTML
+    const remarksHTML = remarks ? `
+        <div class="sheet-section">
+            <h3>その他備考</h3>
+            <div class="sheet-text">${remarks}</div>
+        </div>
+    ` : '';
     
-    // コンセプトシートを表示
-    document.getElementById('conceptSheet').classList.add('visible');
-    document.getElementById('conceptSheet').scrollIntoView({ behavior: 'smooth' });
+    // コンセプトシートのHTMLを生成
+    const conceptSheetHTML = `
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パッケージデザインコンセプトシート - ${productName}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .sheet-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        
+        .sheet-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .product-name {
+            font-size: 20px;
+            color: #667eea;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .date {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .sheet-section {
+            margin-bottom: 30px;
+        }
+        
+        .sheet-section h3 {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .sheet-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .sheet-keyword {
+            background: #f5f7ff;
+            border: 2px solid #667eea;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .sheet-images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .sheet-text {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .sheet-images {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sheet-header">
+            <h1>パッケージデザインコンセプトシート</h1>
+            <p class="product-name">${productName}</p>
+            <p class="date">作成日: ${new Date().toLocaleDateString('ja-JP')}</p>
+        </div>
+        
+        <div class="sheet-section">
+            <h3>選択キーワード</h3>
+            <div class="sheet-keywords">
+                ${keywordNames.map(name => `<span class="sheet-keyword">${name}</span>`).join('')}
+            </div>
+        </div>
+        
+        <div class="sheet-section">
+            <h3>参考画像</h3>
+            <div class="sheet-images">
+                ${imagesHTML}
+            </div>
+        </div>
+        
+        ${referenceHTML}
+        
+        ${remarksHTML}
+        
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="window.print()">印刷 / PDFとして保存</button>
+            <button class="btn btn-secondary" onclick="window.close()">閉じる</button>
+        </div>
+    </div>
+</body>
+</html>
+    `;
+    
+    // 新しいウィンドウを開いてコンセプトシートを表示
+    const newWindow = window.open('', '_blank', 'width=1000,height=800,scrollbars=yes');
+    if (newWindow) {
+        newWindow.document.write(conceptSheetHTML);
+        newWindow.document.close();
+    } else {
+        alert('ポップアップがブロックされました。ブラウザの設定でポップアップを許可してください。');
+    }
 }
 
 // コンセプトシートを閉じる
