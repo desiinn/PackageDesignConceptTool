@@ -3,49 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>パッケージデザインコンセプトシート作成ツール</title>
+    <title>食品パッケージデザインコンセプトシート作成ツール</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>パッケージデザインコンセプトシート作成ツール</h1>
-            <p>食品パッケージのデザインイメージを可視化し、共有しましょう</p>
+            <h1>食品パッケージデザインコンセプトシート作成ツール</h1>
+            <p>v0.3</p>
         </div>
-        
         <div class="content">
-            <!-- Step 0: 製品情報入力 -->
             <div class="section">
                 <div class="section-title">
-                    <span class="step-number">0</span>
+                    <span class="step-number">1</span>
                     製品情報
-                </div>
-                
-                <div class="info-box">
-                    <p>まだ名前が決まっていない場合は、「（仮）北海道バタークッキー」のように、中身がわかる仮の名前でもOKです。</p>
                 </div>
                 
                 <div class="input-group">
                     <label for="productName">商品名（ブランド名）</label>
-                    <p class="input-guide">商品の固有の名前です。ロゴとしてデザインする対象になります。</p>
+                    <p class="input-guide">製品ネーミングを記載してください。ロゴとしてデザインする対象になります。</p>
                     <input type="text" id="productName" class="input-large" placeholder="例：○○の輝き、大地のごちそう">
+                </div>
+                 <div class="info-box">
+                    <p>まだネーミングが決まっていない場合は仮名でご記入ください。</p>
                 </div>
                 
                 <div class="input-group">
                     <label for="productCategory">製品のカテゴリー（一般名称）</label>
-                    <p class="input-guide">パッケージのどこかに必ず記載する、食品そのものの名前です。</p>
+                    <p class="input-guide">食品の種類を記載してください。</p>
                     <input type="text" id="productCategory" placeholder="例：焼菓子、コーンスープ、スモークサーモン">
+                </div>
+                <div class="input-group">
+                    <label for="productUnit">内容量・販売単位</label>
+                    <p class="input-guide">パッケージのサイズや、中身を守るための資材を検討する基準になります。</p>
+                    <input type="text" id="productUnit" placeholder="例：12個入り、150g、500ml、3枚セットなど">
                 </div>
             </div>
             
-            <!-- Step 0.5: ターゲット属性選択 -->
             <div class="section">
                 <div class="section-title">
-                    <span class="step-number">0.5</span>
+                    <span class="step-number">2</span>
                     ターゲット属性
                 </div>
                 <div class="info-box">
-                    <p>想定されるターゲット層を選択してください（1つ選択）</p>
+                    <p>想定しているメインのターゲット層を選択してください（1つ選択）</p>
                 </div>
                 <div class="target-grid" id="targetGrid">
                     <button class="target-btn" data-target="family">
@@ -78,11 +79,44 @@
                     </button>
                 </div>
             </div>
-            
-            <!-- Step 1: キーワード選択 -->
             <div class="section">
                 <div class="section-title">
-                    <span class="step-number">1</span>
+                    <span class="step-number">3</span>
+                    想定している売り場
+                </div>
+                <div class="info-box">
+                    <p>製品が並ぶ場所を選択してください（複数選択可）</p>
+                </div>
+                <div class="target-grid" id="marketGrid">
+                    <button class="target-btn" data-market="tourism">
+                        <div class="target-name">観光・玄関口</div>
+                        <div class="target-desc">空港、土産店、観光施設売店</div>
+                    </button>
+                    <button class="target-btn" data-market="premium">
+                        <div class="target-name">百貨店・ギフト</div>
+                        <div class="target-desc">デパ地下、セレクトショップ</div>
+                    </button>
+                    <button class="target-btn" data-market="daily">
+                        <div class="target-name">日常・量販店</div>
+                        <div class="target-desc">スーパー、コンビニ</div>
+                    </button>
+                    <button class="target-btn" data-market="direct">
+                        <div class="target-name">直接販売・直売所</div>
+                        <div class="target-desc">自社EC・店舗、道の駅</div>
+                    </button>
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label for="marketOther">具体的な店舗名や、その他の売り場があれば記入してください。</label>
+                    <input type="text" id="marketOther" placeholder="例：新千歳空港の土産店、東京の高級セレクトショップなど">
+                </div>
+            </div>
+            
+            
+            <div class="section">
+                <div class="section-title">
+                    <span class="step-number">4
+
+                    </span>
                     イメージキーワード選択
                 </div>
                 <div class="info-box">
@@ -108,10 +142,10 @@
                 </div>
             </div>
             
-            <!-- Step 2&3: 画像表示と選択 -->
             <div class="section">
                 <div class="section-title">
-                    <span class="step-number">2</span>
+                    <span class="step-number">5
+                    </span>
                     イメージに近い画像を選択
                     <span class="selected-count" id="selectedCount">0/10枚選択</span>
                 </div>
@@ -123,10 +157,10 @@
                 </div>
             </div>
             
-            <!-- Step 4: 参考製品 -->
             <div class="section">
                 <div class="section-title">
-                    <span class="step-number">3</span>
+                    <span class="step-number">6
+                    </span>
                     参考となる既存製品
                 </div>
                 <div class="input-group">
@@ -135,15 +169,20 @@
                 </div>
             </div>
             
-            <!-- Step 5: その他備考 -->
             <div class="section">
                 <div class="section-title">
-                    <span class="step-number">4</span>
+                    <span class="step-number">7</span>
                     その他備考
                 </div>
                 <div class="input-group">
-                    <label for="remarks">その他、デザインに関する要望や補足事項があれば記入してください（任意）</label>
-                    <textarea id="remarks" placeholder="例：ターゲット層は30-40代女性です。贈答用としても使えるデザインを希望します。"></textarea>
+                    <label for="remarks">デザインに関する具体的な要望や、避けたいイメージがあれば記入してください（任意）</label>
+                    <div class="input-hint">
+                            <strong>記入例：</strong><br>
+                            ・「青」は食欲を減退させるので、アクセント以外には使わないでほしい。<br>
+                            ・北海道の地図のシルエットをどこかに小さく入れてほしい。<br>
+                            ・ギフト用なので、包装紙やリボンが映えるようなシンプルな箱にしたい。
+                    </div>
+                        <textarea id="remarks" placeholder="こちらに記入してください"></textarea>
                 </div>
             </div>
             

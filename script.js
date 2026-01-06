@@ -71,6 +71,9 @@ let selectedKeywords = [];
 // 選択されたターゲット属性
 let selectedTarget = '';
 
+// 選択された売り場
+let selectedMarkets = [];
+
 // ターゲット属性の日本語マップ
 const targetMap = {
     'family': 'ファミリー（日常・安心）',
@@ -80,6 +83,14 @@ const targetMap = {
     'health': '健康・美容（機能性・自然派）',
     'youth': '若年層（低価格・話題性）',
     'gift': '観光・ギフト（道外向け・プレミアム）'
+};
+
+// 売り場の日本語マップ
+const marketMap = {
+    'tourism': '観光・玄関口（空港・土産店など）',
+    'premium': '百貨店・セレクトショップ（高級スーパーなど）',
+    'daily': '日常・量販店（スーパー・コンビニなど）',
+    'direct': '直接販売（自社EC・道の駅など）'
 };
 
 // 選択された画像（URLと順番を保持）
@@ -121,6 +132,22 @@ document.getElementById('targetGrid').addEventListener('click', function(e) {
             // 新しく選択
             targetBtn.classList.add('selected');
             selectedTarget = target;
+        }
+    }
+});
+
+// 売り場ボタンのクリックイベント
+document.getElementById('marketGrid').addEventListener('click', function(e) {
+    const marketBtn = e.target.closest('.target-btn');
+    if (marketBtn) {
+        const market = marketBtn.dataset.market;
+        
+        if (marketBtn.classList.contains('selected')) {
+            marketBtn.classList.remove('selected');
+            selectedMarkets = selectedMarkets.filter(m => m !== market);
+        } else {
+            marketBtn.classList.add('selected');
+            selectedMarkets.push(market);
         }
     }
 });
@@ -214,8 +241,10 @@ function updateSelectedCount() {
 function generateConceptSheet() {
     const productName = document.getElementById('productName').value.trim();
     const productCategory = document.getElementById('productCategory').value.trim();
+    const productUnit = document.getElementById('productUnit').value.trim();
     const referenceProducts = document.getElementById('referenceProducts').value.trim();
     const remarks = document.getElementById('remarks').value.trim();
+    const marketOther = document.getElementById('marketOther').value.trim();
     
     // バリデーション
     if (!productName) {
@@ -247,6 +276,12 @@ function generateConceptSheet() {
         imagesHTML += `<img src="${imgData.url}" alt="参考画像" style="width: 100%; border-radius: 8px; border: 2px solid #e0e0e0;">`;
     });
     
+    // 売り場の表示用テキスト作成
+    let marketText = selectedMarkets.map(m => marketMap[m]).join('、 ');
+    if (marketOther) {
+        marketText += (marketText ? ' / ' : '') + marketOther;
+    }
+
     // ターゲット属性のHTML
     const targetHTML = selectedTarget ? `
         <div class="sheet-section">
@@ -454,11 +489,16 @@ function generateConceptSheet() {
         <div class="sheet-header">
             <h1>パッケージデザインコンセプトシート</h1>
             <p class="product-name">${productName}</p>
-            <p class="product-category">カテゴリー: ${productCategory}</p>
+            <p class="product-category">カテゴリー: ${productCategory}/ 内容量: ${productUnit}</p>
             <p class="date">作成日: ${new Date().toLocaleDateString('ja-JP')}</p>
         </div>
         
         ${targetHTML}
+
+        <div class="sheet-section">
+            <h3>想定している売り場</h3>
+            <div class="sheet-text">${marketText || '未選択'}</div>
+        </div>
         
         <div class="sheet-section">
             <h3>選択キーワード</h3>
@@ -511,6 +551,8 @@ function resetAll() {
     
     // 入力フィールドをクリア
     document.getElementById('productName').value = '';
+    document.getElementById('productCategory').value = ''; 
+    document.getElementById('productUnit').value = ''; 
     document.getElementById('referenceProducts').value = '';
     document.getElementById('remarks').value = '';
     

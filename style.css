@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #314c6a;
     min-height: 100vh;
     padding: 20px;
 }
@@ -14,14 +14,14 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    background: white;
+    background: #fcfdfd;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     overflow: hidden;
 }
 
 .header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #09203f 0%, #537895 100%);
     color: white;
     padding: 30px;
     text-align: center;
@@ -55,14 +55,14 @@ body {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #667eea;
+    color: #314c6a;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
 .step-number {
-    background: #667eea;
+    background: #314c6a;
     color: white;
     width: 32px;
     height: 32px;
@@ -98,7 +98,7 @@ body {
 .input-group input[type="text"]:focus,
 .input-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #314c6a;
 }
 
 .input-group textarea {
@@ -132,16 +132,16 @@ body {
 }
 
 .target-btn:hover {
-    border-color: #667eea;
+    border-color: #314c6a;
     background: #f5f7ff;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
 }
 
 .target-btn.selected {
-    background: #667eea;
+    background: #314c6a;
     color: white;
-    border-color: #667eea;
+    border-color: #314c6a;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
@@ -172,14 +172,14 @@ body {
 }
 
 .keyword-btn:hover {
-    border-color: #667eea;
+    border-color: #314c6a;
     background: #f5f7ff;
 }
 
 .keyword-btn.selected {
-    background: #667eea;
+    background: #314c6a;
     color: white;
-    border-color: #667eea;
+    border-color: #314c6a;
 }
 
 .images-grid {
@@ -205,8 +205,8 @@ body {
 }
 
 .image-card.selected {
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    border-color: #314c6a;
+    box-shadow: 0 0 0 3px rgba(49, 76, 106, 0.3);
 }
 
 .image-card img {
@@ -219,7 +219,7 @@ body {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: #667eea;
+    background: #314c6a;
     color: white;
     width: 30px;
     height: 30px;
@@ -261,13 +261,15 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #3d5a73 0%, #314c6a 100%);
     color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #4b6d8a 0%, #3d5a73 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .btn-secondary {
@@ -279,23 +281,49 @@ body {
     background: #e0e0e0;
 }
 
+/* 1. セクション導入文 (Info Box) */
 .info-box {
-    background: #f5f7ff;
-    border-left: 4px solid #667eea;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
+    background: #f0f4f8; 
+    border-left: 4px solid #314c6a;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    border-radius: 4px;
+}
+.info-box p {
+    color: #4a5568;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
 }
 
-.info-box p {
-    color: #666;
-    font-size: 14px;
+/* 2. 入力項目の補足説明 (Input Guide) */
+.input-guide {
+    font-size: 13px;
+    color: #718096; /* 少し薄めの文字色 */
+    margin-top: -4px; /* ラベルに近づける */
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* 3. 記入例ボックス (Input Hint) */
+.input-hint {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #cbd5e0; /* 控えめなアクセント */
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #4a5568;
     line-height: 1.6;
+    border-radius: 6px;
+}
+.input-hint strong {
+    color: #314c6a; /* 記入例という文字だけ色を付ける */
 }
 
 .selected-count {
     display: inline-block;
-    background: #667eea;
+    background: #314c6a;
     color: white;
     padding: 5px 12px;
     border-radius: 20px;
