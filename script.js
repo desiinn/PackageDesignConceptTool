@@ -296,11 +296,16 @@ function generateConceptSheet() {
         .product-sub-info { font-size: 12pt; color: #666; }
         .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 6px; }
         .sheet-section { margin-bottom: 10px; }
-        .sheet-section h3 { font-size: 13pt; padding: 2px 0 4px 10px; border-left: 4pt solid #314c6a; border-bottom: 1px solid #eee; margin-bottom: 6px; color: #314c6a; }
+        .sheet-section h3 { font-size: 12pt; padding: 2px 0 4px 10px; border-left: 4pt solid #314c6a; border-bottom: 1px solid #eee; margin-bottom: 6px; color: #314c6a; }
         .sheet-text { padding: 8px; border: 1px solid #eee; min-height: 36px; white-space: pre-wrap; background: #fff; }
         .sheet-keyword { border: 1px solid #314c6a; color: #314c6a; padding: 2px 10px; border-radius: 15px; font-size: 9pt; display: inline-block; margin: 2px; }
         .sheet-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .action-buttons { text-align: center; margin-top: 30px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 5px; font-size: 12pt; font-weight: bold; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, #3d5a73 0%, #314c6a 100%); color: white; border: 1px solid rgba(255,255,255,0.1); }
+        .btn-primary:hover { opacity: 0.95; }
+        .btn-secondary { background: #f0f0f0; color: #333; }
+        .btn-secondary:hover { background: #e0e0e0; }
         @media print { .action-buttons { display: none; } }
     </style>
 </head>
@@ -342,8 +347,8 @@ function generateConceptSheet() {
         </div>
 
         <div class="action-buttons">
-            <button onclick="window.print()" style="background:#314c6a; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">印刷 / PDF保存</button>
-            <button onclick="window.close()" style="margin-left:10px; padding:10px 20px; cursor:pointer;">閉じる</button>
+            <button class="btn btn-primary" onclick="window.print()">印刷 / PDF保存</button>
+            <button class="btn btn-secondary" onclick="window.close()">閉じる</button>
         </div>
     </div>
 </body>
@@ -372,6 +377,7 @@ function resetAll() {
     document.getElementById('productName').value = '';
     document.getElementById('productCategory').value = ''; 
     document.getElementById('productUnit').value = ''; 
+    document.getElementById('marketText').value = '';
     document.getElementById('referenceProducts').value = '';
     document.getElementById('remarks').value = '';
     
