@@ -88,7 +88,7 @@ document.getElementById('keywordsGrid').addEventListener('click', function(e) {
     }
 });
 
-// 画像グリッドの更新（AND条件でフィルタリング）
+// 画像グリッドの更新（OR条件でフィルタリング）
 function updateImageGrid() {
     const imagesGrid = document.getElementById('imagesGrid');
     imagesGrid.innerHTML = '';
@@ -98,16 +98,23 @@ function updateImageGrid() {
         return;
     }
     
-    // 選択されたキーワードに一致する画像をフィルタリング（AND条件）
+    // 選択されたキーワードのいずれか1つでも含まれる画像をフィルタリング（OR条件）
     const matchingImages = availableImages.filter(image => {
-        // 選択されたすべてのキーワードが画像のタグに含まれているか確認
-        return selectedKeywords.every(keyword => image.tags.includes(keyword));
+        // 選択されたキーワードのうち、少なくとも1つが画像のタグに含まれているか確認
+        return selectedKeywords.some(keyword => image.tags.includes(keyword));
     });
     
     if (matchingImages.length === 0) {
-        imagesGrid.innerHTML = '<div class="no-images">選択されたキーワードの組み合わせに該当する画像がありません</div>';
+        imagesGrid.innerHTML = '<div class="no-images">選択されたキーワードに該当する画像がありません</div>';
         return;
     }
+    
+    // マッチ度でソート（より多くのキーワードにマッチする画像を先に表示）
+    matchingImages.sort((a, b) => {
+        const aMatches = selectedKeywords.filter(keyword => a.tags.includes(keyword)).length;
+        const bMatches = selectedKeywords.filter(keyword => b.tags.includes(keyword)).length;
+        return bMatches - aMatches; // 降順（マッチ数が多い順）
+    });
     
     // 画像カードを生成
     matchingImages.forEach((imageData, index) => {
