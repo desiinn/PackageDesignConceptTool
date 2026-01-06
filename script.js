@@ -339,7 +339,7 @@ function generateConceptSheet() {
         .sheet-header {
             text-align: center;
             margin-bottom: 40px;
-            border-bottom: 3px solid #667eea;
+            border-bottom: 3px solid #314c6a;
             padding-bottom: 20px;
         }
         
@@ -351,7 +351,7 @@ function generateConceptSheet() {
         
         .product-name {
             font-size: 22px;
-            color: #667eea;
+            color: #314c6a;
             font-weight: bold;
             margin: 10px 0;
         }
@@ -373,7 +373,7 @@ function generateConceptSheet() {
         }
         
         .sheet-section h3 {
-            background: #667eea;
+            background: #314c6a;
             color: white;
             padding: 10px 15px;
             border-radius: 5px;
@@ -383,7 +383,7 @@ function generateConceptSheet() {
         
         .sheet-target {
             background: #f5f7ff;
-            border: 2px solid #667eea;
+            border: 2px solid #314c6a;
             padding: 12px 20px;
             border-radius: 8px;
             font-size: 16px;
@@ -399,7 +399,7 @@ function generateConceptSheet() {
         
         .sheet-keyword {
             background: #f5f7ff;
-            border: 2px solid #667eea;
+            border: 2px solid #314c6a;
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 14px;
@@ -439,7 +439,7 @@ function generateConceptSheet() {
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #314c6a 0%, #764ba2 100%);
             color: white;
         }
         
