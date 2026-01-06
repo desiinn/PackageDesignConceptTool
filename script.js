@@ -239,54 +239,53 @@ function updateSelectedCount() {
 
 // コンセプトシートの生成（別ウィンドウで表示）
 function generateConceptSheet() {
-    const productName = document.getElementById('productName').value || '未入力の商品名';
-    const productCategory = document.getElementById('productCategory').value || '未設定';
-    const productUnit = document.getElementById('productUnit').value || '';
-    const referenceProducts = document.getElementById('referenceProducts').value || '特になし';
-    const remarks = document.getElementById('remarks').value || '特になし';
+    // 1. 基本情報の取得（IDが一致しているか再確認済み）
+    const productName = document.getElementById('productName').value || '未入力';
+    const productCategory = document.getElementById('productCategory').value || '未入力';
+    const productUnit = document.getElementById('productUnit').value || '未入力';
+    const referenceProducts = document.getElementById('referenceProducts').value || 'なし';
+    const remarks = document.getElementById('remarks').value || 'なし';
 
-    // 選択されたターゲットを取得
-    const activeTarget = document.querySelector('.target-btn.active');
-    const targetName = activeTarget ? activeTarget.querySelector('.target-name').innerText : '未設定';
-    const targetDesc = activeTarget ? activeTarget.querySelector('.target-desc').innerText : '';
+    // 2. ターゲットの取得（.target-btn.active クラスがついている要素を探す）
+    // index.htmlの構造に合わせ、ボタン内のテキストを直接取得するように修正
+    const activeTargetBtn = document.querySelector('.section:nth-of-type(2) .target-btn.active');
+    const targetName = activeTargetBtn ? activeTargetBtn.innerText.split('\n')[0] : '未選択';
 
-    // 選択されたキーワードを取得
+    // 3. 売り場の取得（売り場のセクションからactiveなボタンを探す）
+    const activeMarketBtn = document.querySelector('.section:nth-of-type(3) .target-btn.active');
+    const marketText = activeMarketBtn ? activeMarketBtn.innerText.split('\n')[0] : '未選択';
+
+    // 4. キーワードの取得
     const selectedKeywords = Array.from(document.querySelectorAll('.keyword-btn.active'));
     const keywordNames = selectedKeywords.map(btn => btn.innerText);
 
-    // 選択された画像を取得
+    // 5. 画像の取得
     const selectedImages = Array.from(document.querySelectorAll('.image-item.selected img'));
     const imagesHTML = selectedImages.length > 0 
         ? selectedImages.map(img => `<img src="${img.src}" style="width:100%; border-radius:4px; border:1px solid #ddd;">`).join('')
         : '<p>選択された画像はありません</p>';
 
-    // 売り場のテキスト取得（もしHTMLにmarketTextというIDがある場合。なければ修正してください）
-    const marketText = "選択された売り場の情報をここに反映"; // 必要に応じて取得処理を追加
-
+    // --- コンセプトシートのHTML組み立て ---
     const conceptSheetHTML = `
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>コンセプトシート - ${productName}</title>
     <style>
-        body { font-family: sans-serif; background: white; margin: 0; padding: 0; color: #333; line-height: 1.5; font-size: 10.5pt; }
+        body { font-family: sans-serif; background: white; margin: 0; padding: 0; color: #333; font-size: 10.5pt; }
         .container { max-width: 800px; margin: 0 auto; padding: 20mm; }
         .sheet-header { position: relative; margin-bottom: 30px; border-bottom: 1.5pt solid #314c6a; padding-bottom: 15px; text-align: center; }
         .header-top-left, .header-top-right { position: absolute; top: 0; font-size: 8pt; color: #999; }
         .header-top-left { left: 0; } .header-top-right { right: 0; }
-        .product-name-display { font-size: 24pt; margin: 15px 0 5px; color: #09203f; }
+        .product-name-display { font-size: 24pt; margin: 15px 0 5px; color: #09203f; font-weight: bold; }
         .product-sub-info { font-size: 12pt; color: #666; }
-        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-        .sheet-section { margin-bottom: 25px; }
-        .sheet-section h3 { font-size: 13pt; padding: 2px 0 5px 10px; border-left: 4pt solid #314c6a; border-bottom: 1px solid #eee; margin-bottom: 12px; color: #314c6a; }
-        .sheet-text { padding: 10px; border: 0.5pt solid #eee; min-height: 50px; white-space: pre-wrap; font-size: 10pt; }
-        .sheet-keywords { display: flex; flex-wrap: wrap; gap: 5px; }
-        .sheet-keyword { border: 1px solid #314c6a; color: #314c6a; padding: 2px 10px; border-radius: 15px; font-size: 9pt; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 10px; }
+        .sheet-section { margin-bottom: 20px; }
+        .sheet-section h3 { font-size: 13pt; padding: 2px 0 5px 10px; border-left: 4pt solid #314c6a; border-bottom: 1px solid #eee; margin-bottom: 10px; color: #314c6a; }
+        .sheet-text { padding: 10px; border: 1px solid #eee; min-height: 40px; white-space: pre-wrap; background: #fff; }
+        .sheet-keyword { border: 1px solid #314c6a; color: #314c6a; padding: 2px 10px; border-radius: 15px; font-size: 9pt; display: inline-block; margin: 2px; }
         .sheet-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .action-buttons { text-align: center; margin-top: 50px; }
-        .btn { padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; }
-        .btn-primary { background: #314c6a; color: white; }
+        .action-buttons { text-align: center; margin-top: 30px; }
         @media print { .action-buttons { display: none; } }
     </style>
 </head>
@@ -302,7 +301,7 @@ function generateConceptSheet() {
         <div class="two-column">
             <div class="sheet-section">
                 <h3>ターゲット</h3>
-                <div class="sheet-text"><strong>${targetName}</strong><br>${targetDesc}</div>
+                <div class="sheet-text">${targetName}</div>
             </div>
             <div class="sheet-section">
                 <h3>想定売り場</h3>
@@ -313,7 +312,7 @@ function generateConceptSheet() {
         <div class="sheet-section">
             <h3>選択キーワード</h3>
             <div class="sheet-keywords">
-                ${keywordNames.map(name => `<span class="sheet-keyword">${name}</span>`).join('')}
+                ${keywordNames.length > 0 ? keywordNames.map(name => `<span class="sheet-keyword">${name}</span>`).join('') : '未選択'}
             </div>
         </div>
 
@@ -324,18 +323,18 @@ function generateConceptSheet() {
 
         <div class="sheet-section">
             <h3>既存製品・備考</h3>
-            <div class="sheet-text">【参考製品】\n${referenceProducts}\n\n【要望】\n${remarks}</div>
+            <div class="sheet-text">【参考製品】\n${referenceProducts}\n\n【デザイン要望】\n${remarks}</div>
         </div>
 
         <div class="action-buttons">
-            <button class="btn btn-primary" onclick="window.print()">印刷 / PDF保存</button>
-            <button class="btn" onclick="window.close()" style="background:#eee;">閉じる</button>
+            <button onclick="window.print()" style="background:#314c6a; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">印刷 / PDF保存</button>
+            <button onclick="window.close()" style="margin-left:10px; padding:10px 20px; cursor:pointer;">閉じる</button>
         </div>
     </div>
 </body>
 </html>`;
 
-    const newWindow = window.open('', '_blank');
+    const newWindow = window.open('', '_blank', 'width=1000,height=900,scrollbars=yes');
     if (newWindow) {
         newWindow.document.write(conceptSheetHTML);
         newWindow.document.close();
