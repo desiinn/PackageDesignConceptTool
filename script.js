@@ -87,10 +87,10 @@ const targetMap = {
 
 // 売り場の日本語マップ
 const marketMap = {
-    'tourism': '観光・玄関口（空港・土産店など）',
-    'premium': '百貨店・セレクトショップ（高級スーパーなど）',
-    'daily': '日常・量販店（スーパー・コンビニなど）',
-    'direct': '直接販売（自社EC・道の駅など）'
+    'tourism': '観光・玄関口（空港・土産店・観光施設売店等）',
+    'premium': '百貨店・ギフト（デパ地下・セレクトショップ等）',
+    'daily': '日常・量販店（スーパー・コンビニ等）',
+    'direct': '直接販売（自社EC・店舗・道の駅等）'
 };
 
 // 選択された画像（URLと順番を保持）
@@ -439,13 +439,15 @@ function generateConceptSheet() {
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #314c6a 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3d5a73 0%, #314c6a 100%);
             color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #4b6d8a 0%, #3d5a73 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         
         .btn-secondary {
