@@ -469,6 +469,7 @@ function generateConceptSheet() {
         <div class="sheet-header">
             <div class="header-top-left">パッケージデザインコンセプトシート</div>
             <div class="header-top-right">作成日: ${new Date().toLocaleDateString('ja-JP')}</div>
+            
             <h1 class="product-name-display">${productName}</h1>
             <p class="product-sub-info">${productCategory} / ${productUnit}</p>
         </div>
