@@ -264,6 +264,22 @@ function generateConceptSheet() {
         ? selectedImages.map(img => `<img src="${img.url}" style="width:100%; border-radius:4px; border:1px solid #ddd;">`).join('')
         : '<p>選択された画像はありません</p>';
 
+    // 商品名の長さに応じてフォントサイズを調整
+    let fontSize = '24pt';
+    if (productName.length > 20) {
+        fontSize = '16pt'; // かなり長い場合
+    } else if (productName.length > 12) {
+        fontSize = '18pt'; // やや長い場合
+    }
+
+    // ヘッダー上部の隙間（作成日／タイトルとの重なり回避）を調整
+    let headerPadding = 10; // デフォルト
+    if (productName.length > 20) {
+        headerPadding = 48;
+    } else if (productName.length > 12) {
+        headerPadding = 32;
+    }
+
     // --- コンセプトシートのHTML組み立て ---
     const conceptSheetHTML = `
 <!DOCTYPE html>
@@ -273,10 +289,10 @@ function generateConceptSheet() {
     <style>
         body { font-family: sans-serif; background: white; margin: 0; padding: 0; color: #333; font-size: 10.5pt; }
         .container { max-width: 800px; margin: 0 auto; padding: 20mm; }
-        .sheet-header { position: relative; margin-bottom: 30px; border-bottom: 1.5pt solid #314c6a; padding-bottom: 15px; text-align: center; }
+        .sheet-header { position: relative; margin-bottom: 30px; border-bottom: 1.5pt solid #314c6a; padding-top: ${headerPadding}px; padding-bottom: 15px; text-align: center; }
         .header-top-left, .header-top-right { position: absolute; top: 0; font-size: 8pt; color: #999; }
         .header-top-left { left: 0; } .header-top-right { right: 0; }
-        .product-name-display { font-size: 24pt; margin: 15px 0 5px; color: #09203f; font-weight: bold; }
+        .product-name-display { font-size: ${fontSize}; line-height: 1.2; margin: 15px 0 5px; color: #09203f; word-wrap: break-word; overflow-wrap: break-word; font-weight: bold; }
         .product-sub-info { font-size: 12pt; color: #666; }
         .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 10px; }
         .sheet-section { margin-bottom: 20px; }
