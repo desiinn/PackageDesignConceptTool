@@ -482,7 +482,6 @@ function generateConceptSheet() {
             <h1 class="product-name-display">${productName}</h1>
             <p class="product-sub-info">${productCategory} / ${productUnit}</p>
         </div>
-    </div>
         
         ${targetHTML}
 
