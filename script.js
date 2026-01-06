@@ -241,8 +241,8 @@ function updateSelectedCount() {
 function generateConceptSheet() {
     // 1. 基本情報の取得
     const productName = document.getElementById('productName').value || '未入力';
-    const productCategory = document.getElementById('productCategory').value || '未入力';
-    const productUnit = document.getElementById('productUnit').value || '未入力';
+    const productCategory = document.getElementById('productCategory').value || 'カテゴリ未入力';
+    const productUnit = document.getElementById('productUnit').value || '販売単位未入力';
     const referenceProducts = document.getElementById('referenceProducts').value || 'なし';
     const remarks = document.getElementById('remarks').value || 'なし';
 

@@ -21,6 +21,7 @@ body {
 }
 
 .header {
+    position: relative;
     background: linear-gradient(135deg, #09203f 0%, #537895 100%);
     color: white;
     padding: 30px;
@@ -35,6 +36,23 @@ body {
 .header p {
     font-size: 14px;
     opacity: 0.9;
+}
+
+.version-label {
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    font-size: 13px;
+    opacity: 0.95;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: white;
+}
+
+.header-desc { 
+    margin-top: 6px;
+    font-size: 14px;
+    opacity: 0.95;
 }
 
 .content {
