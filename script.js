@@ -302,8 +302,8 @@ function generateConceptSheet() {
         .sheet-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .action-buttons { text-align: center; margin-top: 30px; }
         .btn { padding: 10px 20px; border: none; border-radius: 5px; font-size: 12pt; font-weight: bold; cursor: pointer; }
-        .btn-primary { background: linear-gradient(135deg, #3d5a73 0%, #314c6a 100%); color: white; border: 1px solid rgba(255,255,255,0.1); }
-        .btn-primary:hover { opacity: 0.95; }
+        .btn-primary { background: #314c6a; color: white; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .btn-primary:hover {background: #3d5a73; transform: translateY(-1px); }
         .btn-secondary { background: #f0f0f0; color: #333; }
         .btn-secondary:hover { background: #e0e0e0; }
         @media print { .action-buttons { display: none; } }
