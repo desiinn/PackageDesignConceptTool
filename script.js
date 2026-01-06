@@ -68,6 +68,20 @@ const availableImages = pictImages.map(filename => {
 // 選択されたキーワード
 let selectedKeywords = [];
 
+// 選択されたターゲット属性
+let selectedTarget = '';
+
+// ターゲット属性の日本語マップ
+const targetMap = {
+    'family': 'ファミリー（日常・安心）',
+    'worker': '働く単身者（時短・利便性）',
+    'senior': 'シニア（健康・高品質）',
+    'reward': '自分へのご褒美（贅沢・トレンド）',
+    'health': '健康・美容（機能性・自然派）',
+    'youth': '若年層（低価格・話題性）',
+    'gift': '観光・ギフト（道外向け・プレミアム）'
+};
+
 // 選択された画像（URLと順番を保持）
 let selectedImages = [];
 
@@ -85,6 +99,29 @@ document.getElementById('keywordsGrid').addEventListener('click', function(e) {
         }
         
         updateImageGrid();
+    }
+});
+
+// ターゲット属性ボタンのクリックイベント
+document.getElementById('targetGrid').addEventListener('click', function(e) {
+    const targetBtn = e.target.closest('.target-btn');
+    if (targetBtn) {
+        const target = targetBtn.dataset.target;
+        
+        // すべてのボタンの選択を解除
+        document.querySelectorAll('.target-btn').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        
+        // クリックされたボタンを選択状態にする
+        if (selectedTarget === target) {
+            // 既に選択されている場合は解除
+            selectedTarget = '';
+        } else {
+            // 新しく選択
+            targetBtn.classList.add('selected');
+            selectedTarget = target;
+        }
     }
 });
 
@@ -176,12 +213,18 @@ function updateSelectedCount() {
 // コンセプトシートの生成（別ウィンドウで表示）
 function generateConceptSheet() {
     const productName = document.getElementById('productName').value.trim();
+    const productCategory = document.getElementById('productCategory').value.trim();
     const referenceProducts = document.getElementById('referenceProducts').value.trim();
     const remarks = document.getElementById('remarks').value.trim();
     
     // バリデーション
     if (!productName) {
-        alert('製品名を入力してください');
+        alert('商品名（ブランド名）を入力してください');
+        return;
+    }
+    
+    if (!productCategory) {
+        alert('製品のカテゴリー（一般名称）を入力してください');
         return;
     }
     
@@ -203,6 +246,14 @@ function generateConceptSheet() {
     selectedImages.forEach(imgData => {
         imagesHTML += `<img src="${imgData.url}" alt="参考画像" style="width: 100%; border-radius: 8px; border: 2px solid #e0e0e0;">`;
     });
+    
+    // ターゲット属性のHTML
+    const targetHTML = selectedTarget ? `
+        <div class="sheet-section">
+            <h3>ターゲット属性</h3>
+            <div class="sheet-target">${targetMap[selectedTarget] || selectedTarget}</div>
+        </div>
+    ` : '';
     
     // 参考製品のHTML
     const referenceHTML = referenceProducts ? `
@@ -264,15 +315,22 @@ function generateConceptSheet() {
         }
         
         .product-name {
-            font-size: 20px;
+            font-size: 22px;
             color: #667eea;
             font-weight: bold;
             margin: 10px 0;
         }
         
+        .product-category {
+            font-size: 16px;
+            color: #666;
+            margin: 5px 0;
+        }
+        
         .date {
             color: #999;
             font-size: 14px;
+            margin-top: 10px;
         }
         
         .sheet-section {
@@ -286,6 +344,16 @@ function generateConceptSheet() {
             border-radius: 5px;
             margin-bottom: 15px;
             font-size: 18px;
+        }
+        
+        .sheet-target {
+            background: #f5f7ff;
+            border: 2px solid #667eea;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
         }
         
         .sheet-keywords {
@@ -386,8 +454,11 @@ function generateConceptSheet() {
         <div class="sheet-header">
             <h1>パッケージデザインコンセプトシート</h1>
             <p class="product-name">${productName}</p>
+            <p class="product-category">カテゴリー: ${productCategory}</p>
             <p class="date">作成日: ${new Date().toLocaleDateString('ja-JP')}</p>
         </div>
+        
+        ${targetHTML}
         
         <div class="sheet-section">
             <h3>選択キーワード</h3>

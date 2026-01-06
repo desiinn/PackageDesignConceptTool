@@ -10,7 +10,7 @@
     <div class="container">
         <div class="header">
             <h1>パッケージデザインコンセプトシート作成ツール</h1>
-            <p>v0.2</p>
+            <p>食品パッケージのデザインイメージを可視化し、共有しましょう</p>
         </div>
         
         <div class="content">
@@ -23,6 +23,47 @@
                 <div class="input-group">
                     <label for="productName">製品名を入力してください</label>
                     <input type="text" id="productName" placeholder="例：北海道産小麦使用 プレミアムパン">
+                </div>
+            </div>
+            
+            <!-- Step 0.5: ターゲット属性選択 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="step-number">0.5</span>
+                    ターゲット属性
+                </div>
+                <div class="info-box">
+                    <p>想定されるターゲット層を選択してください（1つ選択）</p>
+                </div>
+                <div class="target-grid" id="targetGrid">
+                    <button class="target-btn" data-target="family">
+                        <div class="target-name">ファミリー</div>
+                        <div class="target-desc">日常・安心</div>
+                    </button>
+                    <button class="target-btn" data-target="worker">
+                        <div class="target-name">働く単身者</div>
+                        <div class="target-desc">時短・利便性</div>
+                    </button>
+                    <button class="target-btn" data-target="senior">
+                        <div class="target-name">シニア</div>
+                        <div class="target-desc">健康・高品質</div>
+                    </button>
+                    <button class="target-btn" data-target="reward">
+                        <div class="target-name">自分へのご褒美</div>
+                        <div class="target-desc">贅沢・トレンド</div>
+                    </button>
+                    <button class="target-btn" data-target="health">
+                        <div class="target-name">健康・美容</div>
+                        <div class="target-desc">機能性・自然派</div>
+                    </button>
+                    <button class="target-btn" data-target="youth">
+                        <div class="target-name">若年層</div>
+                        <div class="target-desc">低価格・話題性</div>
+                    </button>
+                    <button class="target-btn" data-target="gift">
+                        <div class="target-name">観光・ギフト</div>
+                        <div class="target-desc">道外向け・プレミアム</div>
+                    </button>
                 </div>
             </div>
             
