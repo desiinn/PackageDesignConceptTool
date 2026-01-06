@@ -14,15 +14,27 @@
         </div>
         
         <div class="content">
-            <!-- Step 0: 製品名入力 -->
+            <!-- Step 0: 製品情報入力 -->
             <div class="section">
                 <div class="section-title">
                     <span class="step-number">0</span>
-                    製品名
+                    製品情報
                 </div>
+                
+                <div class="info-box">
+                    <p>まだ名前が決まっていない場合は、「（仮）北海道バタークッキー」のように、中身がわかる仮の名前でもOKです。</p>
+                </div>
+                
                 <div class="input-group">
-                    <label for="productName">製品名を入力してください</label>
-                    <input type="text" id="productName" placeholder="例：北海道産小麦使用 プレミアムパン">
+                    <label for="productName">商品名（ブランド名）</label>
+                    <p class="input-guide">商品の固有の名前です。ロゴとしてデザインする対象になります。</p>
+                    <input type="text" id="productName" class="input-large" placeholder="例：○○の輝き、大地のごちそう">
+                </div>
+                
+                <div class="input-group">
+                    <label for="productCategory">製品のカテゴリー（一般名称）</label>
+                    <p class="input-guide">パッケージのどこかに必ず記載する、食品そのものの名前です。</p>
+                    <input type="text" id="productCategory" placeholder="例：焼菓子、コーンスープ、スモークサーモン">
                 </div>
             </div>
             
