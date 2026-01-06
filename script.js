@@ -378,7 +378,7 @@ function resetAll() {
     document.getElementById('productName').value = '';
     document.getElementById('productCategory').value = ''; 
     document.getElementById('productUnit').value = ''; 
-    document.getElementById('marketText').value = '';
+    document.getElementById('marketOther').value = '';
     document.getElementById('referenceProducts').value = '';
     document.getElementById('remarks').value = '';
     
