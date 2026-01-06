@@ -250,9 +250,11 @@ function generateConceptSheet() {
     const targetName = selectedTarget ? (targetMap[selectedTarget] || selectedTarget) : '未選択';
 
     // 3. 売り場の取得（グローバル変数selectedMarketsを使用）
-    const marketText = selectedMarkets && selectedMarkets.length > 0
-        ? selectedMarkets.map(m => marketMap[m] || m).join(' / ')
-        : '未選択';
+    // 「その他」入力（marketOther）もあれば末尾に追加して反映する
+    const marketOther = (document.getElementById('marketOther') && document.getElementById('marketOther').value) ? document.getElementById('marketOther').value.trim() : '';
+    const marketText = (selectedMarkets && selectedMarkets.length > 0)
+        ? (selectedMarkets.map(m => marketMap[m] || m).join(' / ') + (marketOther ? ' / ' + marketOther : ''))
+        : (marketOther ? marketOther : '未選択');
 
     // 4. キーワードの取得（グローバル変数selectedKeywordsを使用）
     const keywordNames = selectedKeywords && selectedKeywords.length > 0
