@@ -289,15 +289,15 @@ function generateConceptSheet() {
     <style>
         body { font-family: sans-serif; background: white; margin: 0; padding: 0; color: #333; font-size: 10.5pt; }
         .container { max-width: 800px; margin: 0 auto; padding: 20mm; }
-        .sheet-header { position: relative; margin-bottom: 30px; border-bottom: 1.5pt solid #314c6a; padding-top: ${headerPadding}px; padding-bottom: 15px; text-align: center; }
+        .sheet-header { position: relative; margin-bottom: 12px; border-bottom: 1.5pt solid #314c6a; padding-top: ${headerPadding}px; padding-bottom: 8px; text-align: center; }
         .header-top-left, .header-top-right { position: absolute; top: 0; font-size: 8pt; color: #999; }
         .header-top-left { left: 0; } .header-top-right { right: 0; }
-        .product-name-display { font-size: ${fontSize}; line-height: 1.2; margin: 15px 0 5px; color: #09203f; word-wrap: break-word; overflow-wrap: break-word; font-weight: bold; }
+        .product-name-display { font-size: ${fontSize}; line-height: 1.2; margin: 10px 0 4px; color: #09203f; word-wrap: break-word; overflow-wrap: break-word; font-weight: bold; }
         .product-sub-info { font-size: 12pt; color: #666; }
-        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 10px; }
-        .sheet-section { margin-bottom: 20px; }
-        .sheet-section h3 { font-size: 13pt; padding: 2px 0 5px 10px; border-left: 4pt solid #314c6a; border-bottom: 1px solid #eee; margin-bottom: 10px; color: #314c6a; }
-        .sheet-text { padding: 10px; border: 1px solid #eee; min-height: 40px; white-space: pre-wrap; background: #fff; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 6px; }
+        .sheet-section { margin-bottom: 10px; }
+        .sheet-section h3 { font-size: 13pt; padding: 2px 0 4px 10px; border-left: 4pt solid #314c6a; border-bottom: 1px solid #eee; margin-bottom: 6px; color: #314c6a; }
+        .sheet-text { padding: 8px; border: 1px solid #eee; min-height: 36px; white-space: pre-wrap; background: #fff; }
         .sheet-keyword { border: 1px solid #314c6a; color: #314c6a; padding: 2px 10px; border-radius: 15px; font-size: 9pt; display: inline-block; margin: 2px; }
         .sheet-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .action-buttons { text-align: center; margin-top: 30px; }
@@ -381,7 +381,16 @@ function resetAll() {
     });
     selectedKeywords = [];
     
+    // ターゲット・売り場の選択をクリア
+    document.querySelectorAll('.target-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    selectedTarget = '';
+    selectedMarkets = [];
+
     // 画像選択をクリア
+    // （DOM上の選択表示も念のため解除）
+    document.querySelectorAll('.image-card.selected').forEach(c => c.classList.remove('selected'));
     selectedImages = [];
     updateSelectedCount();
     updateImageGrid();
