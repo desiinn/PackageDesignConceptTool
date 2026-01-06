@@ -239,30 +239,29 @@ function updateSelectedCount() {
 
 // コンセプトシートの生成（別ウィンドウで表示）
 function generateConceptSheet() {
-    // 1. 基本情報の取得（IDが一致しているか再確認済み）
+    // 1. 基本情報の取得
     const productName = document.getElementById('productName').value || '未入力';
     const productCategory = document.getElementById('productCategory').value || '未入力';
     const productUnit = document.getElementById('productUnit').value || '未入力';
     const referenceProducts = document.getElementById('referenceProducts').value || 'なし';
     const remarks = document.getElementById('remarks').value || 'なし';
 
-    // 2. ターゲットの取得（.target-btn.active クラスがついている要素を探す）
-    // index.htmlの構造に合わせ、ボタン内のテキストを直接取得するように修正
-    const activeTargetBtn = document.querySelector('.section:nth-of-type(2) .target-btn.active');
-    const targetName = activeTargetBtn ? activeTargetBtn.innerText.split('\n')[0] : '未選択';
+    // 2. ターゲットの取得（グローバル変数selectedTargetを使用）
+    const targetName = selectedTarget ? (targetMap[selectedTarget] || selectedTarget) : '未選択';
 
-    // 3. 売り場の取得（売り場のセクションからactiveなボタンを探す）
-    const activeMarketBtn = document.querySelector('.section:nth-of-type(3) .target-btn.active');
-    const marketText = activeMarketBtn ? activeMarketBtn.innerText.split('\n')[0] : '未選択';
+    // 3. 売り場の取得（グローバル変数selectedMarketsを使用）
+    const marketText = selectedMarkets && selectedMarkets.length > 0
+        ? selectedMarkets.map(m => marketMap[m] || m).join(' / ')
+        : '未選択';
 
-    // 4. キーワードの取得
-    const selectedKeywords = Array.from(document.querySelectorAll('.keyword-btn.active'));
-    const keywordNames = selectedKeywords.map(btn => btn.innerText);
+    // 4. キーワードの取得（グローバル変数selectedKeywordsを使用）
+    const keywordNames = selectedKeywords && selectedKeywords.length > 0
+        ? selectedKeywords.map(k => keywordMap[k] || k)
+        : [];
 
-    // 5. 画像の取得
-    const selectedImages = Array.from(document.querySelectorAll('.image-item.selected img'));
-    const imagesHTML = selectedImages.length > 0 
-        ? selectedImages.map(img => `<img src="${img.src}" style="width:100%; border-radius:4px; border:1px solid #ddd;">`).join('')
+    // 5. 画像の取得（グローバル変数selectedImagesを使用）
+    const imagesHTML = selectedImages && selectedImages.length > 0
+        ? selectedImages.map(img => `<img src="${img.url}" style="width:100%; border-radius:4px; border:1px solid #ddd;">`).join('')
         : '<p>選択された画像はありません</p>';
 
     // --- コンセプトシートのHTML組み立て ---
