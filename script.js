@@ -322,27 +322,24 @@ function generateConceptSheet() {
         }
         
         body {
-            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-            background: #f5f5f5;
-            padding: 40px 20px;
+        background: white; /* 全体の背景を白に */
+        padding: 0;
         }
         
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px;
+        /* 印刷時はシャドウを消す */
+        box-shadow: none;
         }
         
-        /* ヘッダーレイアウトの再構築 */
         .sheet-header {
-            position: relative;
-            margin-bottom: 40px;
-            border-bottom: 3px solid #314c6a;
-            padding-bottom: 30px;
-            text-align: center;
+        position: relative;
+        margin-bottom: 60px;
+        border-bottom: 1px solid #314c6a; /* 境界線を細く */
+        padding-bottom: 30px;
+        text-align: center;
         }
 
         /* 左上のタイトル */
@@ -380,40 +377,34 @@ function generateConceptSheet() {
         }
         
         .sheet-section {
-            margin-bottom: 30px;
+        margin-bottom: 50px;
         }
         
         .sheet-section h3 {
-            background: #314c6a;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-size: 18px;
+        background: transparent; /* 背景を透明に */
+        color: #314c6a; /* 文字色はメインカラーに */
+        padding: 5px 0 10px 15px; /* 左側に少し余白を */
+        border-left: 5px solid #314c6a; /* 太い左線で「ここから項目」を明示 */
+        border-bottom: 1px solid #eee; /* 薄い下線で区切りを強調 */
+        border-radius: 0;
+        margin-bottom: 25px;
+        font-size: 20px;
+        display: block;
+        width: 100%;
         }
-        
-        .sheet-target {
-            background: #f5f7ff;
-            border: 2px solid #314c6a;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            display: inline-block;
-        }
-        
+           
         .sheet-keywords {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         }
-        
+
         .sheet-keyword {
-            background: #f5f7ff;
-            border: 2px solid #314c6a;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        border: 1px solid #314c6a; /* 枠線のみのデザインに */
+        color: #314c6a;
         }
         
         .sheet-images {
@@ -422,12 +413,12 @@ function generateConceptSheet() {
             gap: 15px;
         }
         
-        .sheet-text {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            line-height: 1.8;
-            white-space: pre-wrap;
+        .sheet-text, .sheet-target, .sheet-keyword {
+        background: transparent; /* グレー背景を廃止 */
+        border: 1px solid #e0e0e0; /* 細い枠線で囲む */
+        padding: 20px;
+        line-height: 1.8;
+        border-radius: 6px;
         }
         
         .action-buttons {
@@ -467,9 +458,9 @@ function generateConceptSheet() {
         }
         
         @media print {
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; padding: 20px; }
-            .action-buttons { display: none; }
+        .action-buttons {
+            display: none; /* ボタンは印刷しない */
+            }
         }
     </style>
 </head>
@@ -478,7 +469,6 @@ function generateConceptSheet() {
         <div class="sheet-header">
             <div class="header-top-left">パッケージデザインコンセプトシート</div>
             <div class="header-top-right">作成日: ${new Date().toLocaleDateString('ja-JP')}</div>
-            
             <h1 class="product-name-display">${productName}</h1>
             <p class="product-sub-info">${productCategory} / ${productUnit}</p>
         </div>
