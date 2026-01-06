@@ -322,23 +322,25 @@ function generateConceptSheet() {
         }
         
         body {
-        background: white; /* 全体の背景を白に */
+        background: white;
         padding: 0;
+        margin: 0;
+        font-size: 10.5pt;
+        color: #333;
         }
         
         .container {
-        max-width: 900px;
+        max-width: 800px;
         margin: 0 auto;
-        padding: 40px;
-        /* 印刷時はシャドウを消す */
+        padding: 20px;
         box-shadow: none;
         }
         
         .sheet-header {
         position: relative;
-        margin-bottom: 60px;
-        border-bottom: 1px solid #314c6a; /* 境界線を細く */
-        padding-bottom: 30px;
+        margin-bottom: 30px;
+        border-bottom: 1.5pt solid #314c6a;
+        padding-bottom: 15px;
         text-align: center;
         }
 
@@ -359,39 +361,28 @@ function generateConceptSheet() {
             font-size: 11px;
             color: #999;
         }
-        
-        /* 商品名を一番目立たせる */
+
+        /* 商品名 */
         .product-name-display {
-            font-size: 42px;
-            color: #09203f;
-            font-weight: bold;
-            margin: 20px 0 10px;
-            letter-spacing: 0.05em;
+        font-size: 24pt; /* 42pxから縮小 */
+        margin: 10px 0 5px;
         }
         
-        /* カテゴリーと単位をシンプルに表示 */
         .product-sub-info {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 10px;
+            font-size: 12pt;
+            color: #555;
         }
-        
+
         .sheet-section {
-        margin-bottom: 50px;
+        margin-bottom: 25px;
         }
         
         .sheet-section h3 {
-        background: transparent; /* 背景を透明に */
-        color: #314c6a; /* 文字色はメインカラーに */
-        padding: 5px 0 10px 15px; /* 左側に少し余白を */
-        border-left: 5px solid #314c6a; /* 太い左線で「ここから項目」を明示 */
-        border-bottom: 1px solid #eee; /* 薄い下線で区切りを強調 */
-        border-radius: 0;
-        margin-bottom: 25px;
-        font-size: 20px;
-        display: block;
-        width: 100%;
-        }
+        font-size: 14pt;
+        padding: 2px 0 5px 10px;
+        border-left: 4pt solid #314c6a;
+        margin-bottom: 12px;
+     }
            
         .sheet-keywords {
         display: flex;
@@ -414,11 +405,10 @@ function generateConceptSheet() {
         }
         
         .sheet-text, .sheet-target, .sheet-keyword {
-        background: transparent; /* グレー背景を廃止 */
-        border: 1px solid #e0e0e0; /* 細い枠線で囲む */
-        padding: 20px;
-        line-height: 1.8;
-        border-radius: 6px;
+        font-size: 10.5pt; /* 本文サイズ */
+        padding: 10px;
+        border: 0.5pt solid #ccc;
+        line-height: 1.5;
         }
         
         .action-buttons {
@@ -451,6 +441,12 @@ function generateConceptSheet() {
             color: #333;
         }
         
+        .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        }
+        
         @media (max-width: 768px) {
             .sheet-images { grid-template-columns: repeat(2, 1fr); }
             .container { padding: 20px; }
@@ -473,32 +469,42 @@ function generateConceptSheet() {
             <h1 class="product-name-display">${productName}</h1>
             <p class="product-sub-info">${productCategory} / ${productUnit}</p>
         </div>
-        
-        ${targetHTML}
 
-        <div class="sheet-section">
-            <h3>想定している売り場</h3>
-            <div class="sheet-text">${marketText || '未選択'}</div>
+        <div class="two-column">
+            <div class="sheet-section">
+                <h3>ターゲット設定</h3>
+                <div class="sheet-target">${targetMarket}</div>
+            </div>
+            <div class="sheet-section">
+                <h3>想定している売り場</h3>
+                <div class="sheet-text">${marketText || '未選択'}</div>
+            </div>
         </div>
-        
+
         <div class="sheet-section">
             <h3>選択キーワード</h3>
             <div class="sheet-keywords">
                 ${keywordNames.map(name => `<span class="sheet-keyword">${name}</span>`).join('')}
             </div>
         </div>
-        
+
         <div class="sheet-section">
-            <h3>参考画像</h3>
+            <h3>参考イメージ（方向性）</h3>
             <div class="sheet-images">
                 ${imagesHTML}
             </div>
         </div>
-        
-        ${referenceHTML}
-        
-        ${remarksHTML}
-        
+
+        <div class="sheet-section">
+            <h3>参考にしたい既存製品</h3>
+            <div class="sheet-text">${referenceProducts || '特になし'}</div>
+        </div>
+
+        <div class="sheet-section">
+            <h3>デザインに関する要望・備考</h3>
+            <div class="sheet-text">${remarks || '特になし'}</div>
+        </div>
+
         <div class="action-buttons">
             <button class="btn btn-primary" onclick="window.print()">印刷 / PDFとして保存</button>
             <button class="btn btn-secondary" onclick="window.close()">閉じる</button>
