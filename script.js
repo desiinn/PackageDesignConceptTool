@@ -287,6 +287,7 @@ function generateConceptSheet() {
 <head>
     <meta charset="UTF-8">
     <style>
+        * { box-sizing: border-box; }
         body { font-family: sans-serif; background: white; margin: 0; padding: 0; color: #333; font-size: 10.5pt; }
         .container { max-width: 800px; margin: 0 auto; padding: 20mm; }
         .sheet-header { position: relative; margin-bottom: 12px; border-bottom: 1.5pt solid #314c6a; padding-top: ${headerPadding}px; padding-bottom: 8px; text-align: center; }
@@ -300,10 +301,10 @@ function generateConceptSheet() {
         .sheet-text { padding: 8px; border: 1px solid #eee; min-height: 36px; white-space: pre-wrap; background: #fff; }
         .sheet-keyword { border: 1px solid #314c6a; color: #314c6a; padding: 2px 10px; border-radius: 15px; font-size: 9pt; display: inline-block; margin: 2px; }
         .sheet-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .action-buttons { text-align: center; margin-top: 30px; }
-        .btn { padding: 10px 20px; border: none; border-radius: 5px; font-size: 12pt; font-weight: bold; cursor: pointer; }
+        .action-buttons { display: flex; gap: 24px; justify-content: center; align-items: center; margin-top: 30px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 5px; font-size: 12pt; font-weight: bold; cursor: pointer; line-height: 1; }
         .btn-primary { background: #314c6a; color: white; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .btn-primary:hover {background: #3d5a73; transform: translateY(-1px); }
+        .btn-primary:hover {background: #3d5a73; }
         .btn-secondary { background: #f0f0f0; color: #333; }
         .btn-secondary:hover { background: #e0e0e0; }
         @media print { .action-buttons { display: none; } }
