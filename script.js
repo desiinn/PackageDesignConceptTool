@@ -313,7 +313,7 @@ function generateConceptSheet() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>パッケージデザインコンセプトシート - ${productName}</title>
+    <title>コンセプトシート - ${productName}</title>
     <style>
         * {
             margin: 0;
@@ -336,36 +336,47 @@ function generateConceptSheet() {
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
+        /* ヘッダーレイアウトの再構築 */
         .sheet-header {
-            text-align: center;
+            position: relative;
             margin-bottom: 40px;
             border-bottom: 3px solid #314c6a;
-            padding-bottom: 20px;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+
+        /* 左上のタイトル */
+        .header-top-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* 右上の作成日 */
+        .header-top-right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 11px;
+            color: #999;
         }
         
-        .sheet-header h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .product-name {
-            font-size: 22px;
-            color: #314c6a;
+        /* 商品名を一番目立たせる */
+        .product-name-display {
+            font-size: 42px;
+            color: #09203f;
             font-weight: bold;
-            margin: 10px 0;
+            margin: 20px 0 10px;
+            letter-spacing: 0.05em;
         }
         
-        .product-category {
+        /* カテゴリーと単位をシンプルに表示 */
+        .product-sub-info {
             font-size: 16px;
             color: #666;
-            margin: 5px 0;
-        }
-        
-        .date {
-            color: #999;
-            font-size: 14px;
-            margin-top: 10px;
+            margin-bottom: 10px;
         }
         
         .sheet-section {
@@ -441,13 +452,7 @@ function generateConceptSheet() {
         .btn-primary {
             background: linear-gradient(135deg, #3d5a73 0%, #314c6a 100%);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.1); 
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #4b6d8a 0%, #3d5a73 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         
         .btn-secondary {
@@ -455,45 +460,29 @@ function generateConceptSheet() {
             color: #333;
         }
         
-        .btn-secondary:hover {
-            background: #e0e0e0;
-        }
-        
         @media (max-width: 768px) {
-            .sheet-images {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .container {
-                padding: 20px;
-            }
+            .sheet-images { grid-template-columns: repeat(2, 1fr); }
+            .container { padding: 20px; }
+            .product-name-display { font-size: 32px; }
         }
         
         @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .container {
-                box-shadow: none;
-                padding: 20px;
-            }
-            
-            .action-buttons {
-                display: none;
-            }
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+            .action-buttons { display: none; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="sheet-header">
-            <h1>パッケージデザインコンセプトシート</h1>
-            <p class="product-name">${productName}</p>
-            <p class="product-category">カテゴリー: ${productCategory}/ 内容量: ${productUnit}</p>
-            <p class="date">作成日: ${new Date().toLocaleDateString('ja-JP')}</p>
+            <div class="header-top-left">パッケージデザインコンセプトシート</div>
+            <div class="header-top-right">作成日: ${new Date().toLocaleDateString('ja-JP')}</div>
+            
+            <h1 class="product-name-display">${productName}</h1>
+            <p class="product-sub-info">${productCategory} / ${productUnit}</p>
         </div>
+    </div>
         
         ${targetHTML}
 
