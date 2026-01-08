@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="version-label">v0.8</div>
+            <div class="version-label">v0.8.2</div>
             <h1>食品パッケージデザインコンセプトシート作成ツール</h1>
             <p class="header-desc">7ステップで、クライアントの頭の中にあるイメージを整理し、デザイナーとの共有を円滑にするシートが完成します。</p>
         </div>
@@ -22,7 +22,7 @@
                 
                 <div class="input-group">
                     <label for="productName">商品名（ブランド名）</label>
-                    <p class="input-guide">製品ネーミングを記載してください。ロゴとしてデザインする対象になります。</p>
+                    <p class="input-guide">商品のネーミングを記載してください。</p>
                     <input type="text" id="productName" class="input-large" placeholder="例：○○の輝き、大地のごちそう">
                 </div>
                  <div class="info-box">
@@ -30,13 +30,17 @@
                 </div>
                 
                 <div class="input-group">
-                    <label for="productCategory">製品のカテゴリー（一般名称）</label>
-                    <p class="input-guide">食品の種類を記載してください。</p>
+                    <div class="label-row">
+                        <label for="productCategory">製品のカテゴリー（一般名称）</label>
+                        <p class="input-guide">食品の種類を記入してください。</p>
+                    </div>
                     <input type="text" id="productCategory" placeholder="例：焼菓子、コーンスープ、スモークサーモン">
                 </div>
                 <div class="input-group">
-                    <label for="productUnit">内容量・販売単位</label>
-                    <p class="input-guide">パッケージのサイズや、中身を守るための資材を検討する基準になります。</p>
+                    <div class="label-row">
+                        <label for="productUnit">内容量・販売単位</label>
+                        <p class="input-guide">パッケージの形態や入り個数を記入してください。</p>
+                    </div>
                     <input type="text" id="productUnit" placeholder="例：12個入り、150g、500ml、3枚セットなど">
                 </div>
             </div>
@@ -125,12 +129,12 @@
                 </div>
                 <div class="keywords-grid" id="keywordsGrid">
                     <button class="keyword-btn" data-keyword="luxury">高級感</button>
-                    <button class="keyword-btn" data-keyword="elegant">優雅</button>
-                    <button class="keyword-btn" data-keyword="modern">モダン</button>
+                    <button class="keyword-btn" data-keyword="elegant">エレガント</button>
+                    <button class="keyword-btn" data-keyword="modern">現代的</button>
                     <button class="keyword-btn" data-keyword="minimal">洗練された</button>
                     <button class="keyword-btn" data-keyword="natural">ナチュラル</button>
                     <button class="keyword-btn" data-keyword="healthy">健康的</button>
-                    <button class="keyword-btn" data-keyword="traditional">伝統的</button>
+                    <button class="keyword-btn" data-keyword="traditional">和風</button>
                     <button class="keyword-btn" data-keyword="retro">レトロ</button>
                     <button class="keyword-btn" data-keyword="cute">かわいい</button>
                     <button class="keyword-btn" data-keyword="simple">シンプル</button>
@@ -151,7 +155,7 @@
                     <span class="selected-count" id="selectedCount">0/10枚選択</span>
                 </div>
                 <div class="info-box">
-                    <p>イメージに近い画像を5〜10枚選択してください。画像をクリックして選択/解除できます。</p>
+                    <p>イメージに近い画像や好きな画像を10枚まで選択してください。画像をクリックして選択/解除できます。</p>
                 </div>
                 <div class="images-grid" id="imagesGrid">
                     <div class="no-images">キーワードを選択すると、関連する画像が表示されます</div>
@@ -179,9 +183,8 @@
                     <label for="remarks">デザインに関する具体的な要望や、避けたいイメージがあれば記入してください（任意）</label>
                     <div class="input-hint">
                             <strong>記入例：</strong><br>
-                            ・「青」は食欲を減退させるので、アクセント以外には使わないでほしい。<br>
-                            ・北海道の地図のシルエットをどこかに小さく入れてほしい。<br>
-                            ・ギフト用なので、包装紙やリボンが映えるようなシンプルな箱にしたい。
+                            ・「青」は競合製品とイメージが被るので使わないでほしい。<br>
+                            ・北海道のシルエットをどこかに入れてほしい。<br>
                     </div>
                         <textarea id="remarks" placeholder="こちらに記入してください"></textarea>
                 </div>
