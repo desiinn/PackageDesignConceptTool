@@ -121,7 +121,7 @@ const pictImages = [
 const keywordMap = {
     'luxury': '高級感',
     'elegant': 'エレガント',
-    'modern': 'モダン',
+    'modern': '現代的',
     'minimal': '洗練された',
     'natural': 'ナチュラル',
     'healthy': '健康的',
