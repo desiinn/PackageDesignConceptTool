@@ -428,7 +428,7 @@ function generateConceptSheet() {
         </div>
 
         <div class="sheet-section">
-            <h3>既存製品・備考</h3>
+            <h3>参考製品・備考</h3>
             <div class="sheet-text">【参考製品】\n${referenceProducts}\n\n【デザイン要望】\n${remarks}</div>
         </div>
 
@@ -490,3 +490,38 @@ function resetAll() {
     // コンセプトシートを閉じる
     closeConceptSheet();
 }
+
+// --- Info modal handlers ---
+document.addEventListener('DOMContentLoaded', function() {
+    const infoBtn = document.getElementById('infoButton');
+    const modal = document.getElementById('infoModal');
+    const modalClose = document.getElementById('modalClose');
+
+    if (!infoBtn || !modal) return;
+
+    function openModal() {
+        modal.removeAttribute('hidden');
+        document.body.style.overflow = 'hidden';
+        const focusable = modal.querySelector('[tabindex], button, a, input, textarea');
+        if (focusable) focusable.focus();
+    }
+
+    function closeModal() {
+        modal.setAttribute('hidden', '');
+        document.body.style.overflow = '';
+        infoBtn.focus();
+    }
+
+    infoBtn.addEventListener('click', openModal);
+    modal.addEventListener('click', function(e) {
+        if (e.target && e.target.getAttribute && e.target.getAttribute('data-close') === 'true') {
+            closeModal();
+        }
+    });
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) {
+            closeModal();
+        }
+    });
+});

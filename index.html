@@ -10,6 +10,9 @@
     <div class="container">
         <div class="header">
             <div class="version-label">v0.8.2</div>
+            <button id="infoButton" class="info-btn" aria-haspopup="dialog" aria-controls="infoModal" title="情報">
+                i
+            </button>
             <h1>食品パッケージデザインコンセプトシート作成ツール</h1>
             <p class="header-desc">7ステップで、クライアントの頭の中にあるイメージを整理し、デザイナーとの共有を円滑にするシートが完成します。</p>
         </div>
@@ -17,7 +20,7 @@
             <div class="section">
                 <div class="section-title">
                     <span class="step-number">1</span>
-                    製品情報
+                    商品情報
                 </div>
                 
                 <div class="input-group">
@@ -31,7 +34,7 @@
                 
                 <div class="input-group">
                     <div class="label-row">
-                        <label for="productCategory">製品のカテゴリー（一般名称）</label>
+                        <label for="productCategory">商品のカテゴリー（一般名称）</label>
                         <p class="input-guide">食品の種類を記入してください。</p>
                     </div>
                     <input type="text" id="productCategory" placeholder="例：焼菓子、コーンスープ、スモークサーモン">
@@ -199,5 +202,43 @@
     </div>
 
     <script src="script.js"></script>
+    <!-- Info modal -->
+    <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle" hidden>
+        <div class="modal-overlay" data-close="true"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="閉じる">✕</button>
+            <h2 id="infoTitle">このツールについて</h2>
+            <section>
+                <h3>「想い」と「形」のズレをなくす、対話のためのコンセプトツール。</h3>
+                <p>パッケージ制作において、クライアントの頭の中のイメージを<br>
+                    作り手と正確に共有することは、非常に難しいプロセスです。</p>
+                <p>このツールは、その「言語化の壁」を解消するために開発されました。<br>
+                    抽象的な言葉だけでなく、具体的な参考画像を選択することで、<br>
+                    脳内イメージを視覚的に整理します。</p>
+                <p>掲載している大量の参考画像は、画像生成AI「<a href="https://labs.google/fx/ja/tools/whisk" target="_blank" rel="noopener noreferrer" class="info-link">Whisk</a>」を活用し、<br>
+                    既存の型にとらわれない多様なパターンを用意しました。</p>
+                <p>営業担当者のヒアリングツールとして、あるいはデザイナーの思考整理ツールとして、<br>
+                    デザインプロジェクトの起点としてご活用ください。</p>
+            </section>
+            <section>
+                <h3>使い方</h3>
+                <ol>
+                    <li>対象となる商品の情報を入力します。</li>
+                    <li>商品のターゲット属性、想定している売り場を選択肢から選びます。</li>
+                    <li>パッケージのイメージに近いキーワードを選択します。</li>
+                    <li>キーワードに対応した画像が表示されるので、イメージに近いものを選択します。</li>
+                    <li>参考にしたい既存製品や、デザインに関する要望があれば記入します。</li>
+                    <li>「コンセプトシートを生成」を押し、入力内容をまとめたシートを表示します。</li>
+                    <li>「印刷/PDFとして保存」ボタンから、印刷・保存が可能です。</li>
+                </ol>
+            </section>
+            <section>
+                <h3>作成者情報</h3>
+                <p>作成:（地独）北海道立総合研究機構工業試験場ヒューマンテクノロジー部デザインG</p>
+                <p>研究課題：パッケージデザインへの生成AIおよびXR技術の適用に関する研究</p>
+                <p>
+            </section>
+        </div>
+    </div>
 </body>
 </html>
