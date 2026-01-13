@@ -387,7 +387,10 @@ function generateConceptSheet() {
     <style>
         * { box-sizing: border-box; }
         body { font-family: sans-serif; background: white; margin: 0; padding: 0; color: #333; font-size: 10.5pt; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20mm; }
+        /* 余白を調整: 20mm は大きすぎるため縮小 */
+        .container { max-width: 800px; margin: 0 auto; padding: 8mm; }
+        /* 印刷時のページマージンも揃える */
+        @page { margin: 8mm; }
         .sheet-header { position: relative; margin-bottom: 12px; border-bottom: 1.5pt solid #314c6a; padding-top: ${headerPadding}px; padding-bottom: 8px; text-align: center; }
         .header-top-left, .header-top-right { position: absolute; top: 0; font-size: 8pt; color: #999; }
         .header-top-left { left: 0; } .header-top-right { right: 0; }
