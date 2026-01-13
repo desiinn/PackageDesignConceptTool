@@ -215,8 +215,8 @@ document.getElementById('targetGrid').addEventListener('click', function(e) {
     if (targetBtn) {
         const target = targetBtn.dataset.target;
         
-        // すべてのボタンの選択を解除
-        document.querySelectorAll('.target-btn').forEach(btn => {
+        // すべてのターゲットボタンの選択を解除（売り場ボタンには影響させない）
+        document.querySelectorAll('#targetGrid .target-btn').forEach(btn => {
             btn.classList.remove('selected');
         });
         
