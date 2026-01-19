@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="version-label">v0.8.3</div>
+            <div class="version-label">v0.8.5</div>
             <button id="infoButton" class="info-btn" aria-haspopup="dialog" aria-controls="infoModal" title="情報">
                 i
             </button>
@@ -46,6 +46,13 @@
                         <p class="input-guide">パッケージの形態や入り個数を記入してください。</p>
                     </div>
                     <input type="text" id="productUnit" placeholder="例：12個入り、150g、500ml、3枚セットなど">
+                </div>
+                <div class="input-group">
+                    <div class="label-row">
+                        <label for="requiredLabels">必須表示事項・デザイン制約</label>
+                        <p class="input-guide">法的に表示が必要な内容やデザイン上で守らなければならないことがあれば記入してください。</p>
+                    </div>
+                    <input type="text" id="requiredLabels" placeholder="例：生食用等の注釈、要冷蔵の強調表示、イラスト・表現の制限（断面NG等）など">
                 </div>
             </div>
             

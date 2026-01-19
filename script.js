@@ -339,6 +339,7 @@ function generateConceptSheet() {
     const productName = document.getElementById('productName').value || '未入力';
     const productCategory = document.getElementById('productCategory').value || 'カテゴリ未入力';
     const productUnit = document.getElementById('productUnit').value || '販売単位未入力';
+    const requiredLabels = document.getElementById('requiredLabels').value || 'なし';
     const referenceProducts = document.getElementById('referenceProducts').value || 'なし';
     const remarks = document.getElementById('remarks').value || 'なし';
 
@@ -429,6 +430,11 @@ function generateConceptSheet() {
                 <h3>想定売り場</h3>
                 <div class="sheet-text">${marketText}</div>
             </div>
+        </div>
+
+        <div class="sheet-section">
+            <h3>必須表示事項・デザイン制約</h3>
+            <div class="sheet-text">${requiredLabels}</div>
         </div>
 
         <div class="sheet-section">
