@@ -471,8 +471,15 @@ function generateConceptSheet() {
 
 // コンセプトシートを閉じる
 function closeConceptSheet() {
-    document.getElementById('conceptSheet').classList.remove('visible');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const cs = document.getElementById('conceptSheet');
+    if (cs && cs.classList) {
+        cs.classList.remove('visible');
+    }
+    try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+        // スクロールが利用できない環境でも無視
+    }
 }
 
 // すべてリセット
@@ -485,6 +492,7 @@ function resetAll() {
     document.getElementById('productName').value = '';
     document.getElementById('productCategory').value = ''; 
     document.getElementById('productUnit').value = ''; 
+    document.getElementById('requiredLabels').value = '';
     document.getElementById('marketOther').value = '';
     document.getElementById('referenceProducts').value = '';
     document.getElementById('remarks').value = '';
@@ -547,3 +555,115 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// ==========================================
+// サンプルデータ読み込み機能（画像選択対応版）
+// ==========================================
+
+const coffeeSampleData = {
+    productName: "大地の恵み オーガニック・カフェ・ドリップ",
+    productCategory: "ローストコーヒー（ドリップバッグ）",
+    productUnit: "1パック（10g×5個入り）",
+    requiredLabels: "有機JASマークの表示スペース確保、表面に『フェアトレード対象商品』の文言を記載すること。",
+    target: "health", // 健康・美容（機能性・自然派）
+    markets: ["premium", "direct"], // 百貨店・ギフト、直接販売・直売所
+    marketOther: "オーガニック専門のセレクトショップ、自社オンラインショップ",
+    keywords: ["natural", "healthy", "rustic"], // ナチュラル、健康的、素朴な
+    referenceProducts: "〇〇珈琲の『クラフトシリーズ』。未晒しクラフト紙の風合いと、シンプルな植物モチーフのイラストが今回の理想に近いです。",
+    remarks: "化学肥料不使用の優しいイメージを伝えたいので、あまりビビッドな色は使わず、アースカラー（ブラウンやベージュ、くすんだグリーン等）を基調にしてください。",
+    // サンプルとして自動選択させる画像のファイル名（キーワードに合致するものから選定）
+    images: [
+        "handmade_rustic_elegant_healthy.jpeg",
+        "handmade_warm_simple_natural.jpeg"
+    ]
+};
+
+function loadCoffeeSample() {
+    // すでに何かが入力されている場合は確認ダイアログを表示
+    const getTrimmed = id => {
+        const el = document.getElementById(id);
+        return el && typeof el.value === 'string' ? el.value.trim() : '';
+    };
+
+    const hasInput = Boolean(
+        getTrimmed('productName') ||
+        getTrimmed('productCategory') ||
+        getTrimmed('productUnit') ||
+        getTrimmed('requiredLabels') ||
+        getTrimmed('marketOther') ||
+        getTrimmed('referenceProducts') ||
+        getTrimmed('remarks') ||
+        selectedTarget ||
+        (selectedKeywords && selectedKeywords.length > 0) ||
+        (selectedImages && selectedImages.length > 0)
+    );
+
+    if (hasInput) {
+        const proceed = confirm('現在入力されている内容が上書きされます。サンプルデータを読み込みますか？');
+        if (!proceed) return;
+    }
+
+    // 1. テキスト入力系の反映
+    document.getElementById('productName').value = coffeeSampleData.productName;
+    document.getElementById('productCategory').value = coffeeSampleData.productCategory;
+    document.getElementById('productUnit').value = coffeeSampleData.productUnit;
+    document.getElementById('requiredLabels').value = coffeeSampleData.requiredLabels;
+    document.getElementById('marketOther').value = coffeeSampleData.marketOther;
+    document.getElementById('referenceProducts').value = coffeeSampleData.referenceProducts;
+    document.getElementById('remarks').value = coffeeSampleData.remarks;
+
+    // 2. ターゲット属性の反映
+    selectedTarget = coffeeSampleData.target;
+    document.querySelectorAll('#targetGrid .target-btn').forEach(btn => {
+        if (btn.dataset.target === coffeeSampleData.target) {
+            btn.classList.add('selected');
+        } else {
+            btn.classList.remove('selected');
+        }
+    });
+
+    // 3. 想定売り場の反映
+    selectedMarkets = [...coffeeSampleData.markets];
+    document.querySelectorAll('#marketGrid .target-btn').forEach(btn => {
+        if (coffeeSampleData.markets.includes(btn.dataset.market)) {
+            btn.classList.add('selected');
+        } else {
+            btn.classList.remove('selected');
+        }
+    });
+
+    // 4. イメージキーワードの反映
+    selectedKeywords = [...coffeeSampleData.keywords];
+    document.querySelectorAll('#keywordsGrid .keyword-btn').forEach(btn => {
+        if (coffeeSampleData.keywords.includes(btn.dataset.keyword)) {
+            btn.classList.add('selected');
+        } else {
+            btn.classList.remove('selected');
+        }
+    });
+
+    // 5. キーワードに基づき画像グリッドを生成・表示
+    updateImageGrid();
+
+    // 6. 画像の選択状態の反映と同期
+    // selectedImages は {url, order} の配列として管理するため同期してセットする
+    selectedImages = [];
+
+    // 生成されたDOM（画像カード）に対して選択クラスを付与し、selectedImages にオブジェクトを追加
+    document.querySelectorAll('#imagesGrid .image-card').forEach(card => {
+        const imgElement = card.querySelector('img');
+        if (imgElement) {
+            const srcPath = imgElement.getAttribute('src');
+            const fileName = srcPath.substring(srcPath.lastIndexOf('/') + 1);
+
+            if (coffeeSampleData.images.includes(fileName)) {
+                card.classList.add('selected');
+                // 選択配列に追加（順序は表示順）
+                selectedImages.push({ url: srcPath, order: selectedImages.length + 1 });
+            }
+        }
+    });
+
+    // 選択枚数カウント（上部の表示）を更新
+    updateSelectedCount();
+}

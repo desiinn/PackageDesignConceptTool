@@ -479,3 +479,31 @@ body {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
+/* サンプルデータ入力ボタン（シンプル版） */
+.btn-sample-simple {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: max-content;
+    margin: 0 0 25px auto; /* 右寄せ */
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #314c6a; /* 既存のテーマカラー */
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0; /* .target-btnと同じ薄いグレーの枠線 */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* ホバー時は.target-btnの選択時（薄いブルー背景）の挙動を適用 */
+.btn-sample-simple:hover {
+    border-color: #314c6a;
+    background-color: #f0f4f8;
+    transform: translateY(-1px);
+}
+
+.btn-sample-simple:active {
+    transform: translateY(0);
+}
