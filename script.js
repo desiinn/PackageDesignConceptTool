@@ -667,3 +667,150 @@ function loadCoffeeSample() {
     // 選択枚数カウント（上部の表示）を更新
     updateSelectedCount();
 }
+// ==========================================
+// JSON設定ファイルの書き出し（エクスポート）
+// ==========================================
+function exportToJSON() {
+    // 1. 現在の入力・選択状態を1つのオブジェクトに集約
+    const configData = {
+        productName: document.getElementById('productName').value,
+        productCategory: document.getElementById('productCategory').value,
+        productUnit: document.getElementById('productUnit').value,
+        requiredLabels: document.getElementById('requiredLabels').value,
+        target: selectedTarget, // グローバル変数
+        markets: selectedMarkets, // グローバル変数（配列）
+        marketOther: document.getElementById('marketOther').value,
+        keywords: selectedKeywords, // グローバル変数（配列）
+        referenceProducts: document.getElementById('referenceProducts').value,
+        remarks: document.getElementById('remarks').value,
+        images: selectedImages.map(img => {
+            const fileName = img.url.substring(img.url.lastIndexOf('/') + 1);
+            return fileName;
+        }) // file name array for portability
+    };
+
+    // 2. オブジェクトをJSON文字列に変換
+    const jsonString = JSON.stringify(configData, null, 2); // インデント2で整形
+
+    // 3. Blob（バイナリデータ）を作成してダウンロード
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    
+    // 一時的なダウンロード用リンク要素を作ってクリックさせる
+    const a = document.createElement("a");
+    // ファイル名に今日の日付を付与（例: concept_setting_20260601.json）
+    const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    a.href = url;
+    a.download = `concept_setting_${today}.json`;
+    
+    document.body.appendChild(a);
+    a.click();
+    
+    // 後片付け
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// ==========================================
+// JSON設定ファイルの読み込み（インポート）
+// ==========================================
+function importFromJSON(inputElement) {
+    const file = inputElement.files[0];
+    if (!file) return;
+
+    // 事前の入力上書き確認
+    const hasInput = document.getElementById('productName').value || selectedKeywords.length > 0;
+    if (hasInput && !confirm('現在入力されている内容が上書きされます。ファイルを読み込みますか？')) {
+        inputElement.value = ""; // 選択リセット
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            // 1. テキストをオブジェクトにパース
+            const configData = JSON.parse(e.target.result);
+
+            // 2. 各テキストフォームへの値の復元
+            document.getElementById('productName').value = configData.productName || "";
+            document.getElementById('productCategory').value = configData.productCategory || "";
+            document.getElementById('productUnit').value = configData.productUnit || "";
+            document.getElementById('requiredLabels').value = configData.requiredLabels || "";
+            document.getElementById('marketOther').value = configData.marketOther || "";
+            document.getElementById('referenceProducts').value = configData.referenceProducts || "";
+            document.getElementById('remarks').value = configData.remarks || "";
+
+            // 3. ターゲット属性のUI復元
+            selectedTarget = configData.target || "";
+            document.querySelectorAll('#targetGrid .target-btn').forEach(btn => {
+                if (btn.dataset.target === selectedTarget) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+
+            // 4. 想定売り場のUI復元
+            selectedMarkets = Array.isArray(configData.markets) ? [...configData.markets] : [];
+            document.querySelectorAll('#marketGrid .target-btn').forEach(btn => {
+                if (selectedMarkets.includes(btn.dataset.market)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+
+            // 5. イメージキーワードのUI復元
+            selectedKeywords = Array.isArray(configData.keywords) ? [...configData.keywords] : [];
+            document.querySelectorAll('#keywordsGrid .keyword-btn').forEach(btn => {
+                if (selectedKeywords.includes(btn.dataset.keyword)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+
+            // 6. キーワードに連動する画像グリッドの再生成
+            updateImageGrid();
+
+            // 7. 画像の選択状態の復元
+            const importedImageNames = Array.isArray(configData.images)
+                ? configData.images.map(item => {
+                    if (typeof item === 'string') return item;
+                    if (item && typeof item.url === 'string') {
+                        return item.url.substring(item.url.lastIndexOf('/') + 1);
+                    }
+                    return '';
+                }).filter(Boolean)
+                : [];
+
+            selectedImages = [];
+            document.querySelectorAll('#imagesGrid .image-card').forEach(card => {
+                const imgElement = card.querySelector('img');
+                if (imgElement) {
+                    const srcPath = imgElement.getAttribute('src');
+                    const fileName = srcPath.substring(srcPath.lastIndexOf('/') + 1);
+                    if (importedImageNames.includes(fileName)) {
+                        card.classList.add('selected');
+                        selectedImages.push({ url: srcPath, order: selectedImages.length + 1 });
+                    }
+                }
+            });
+
+            // 選択枚数カウントの表示を更新
+            updateSelectedCount();
+            
+            alert('設定ファイルを正しく読み込みました。');
+
+        } catch (error) {
+            console.error(error);
+            alert('ファイルの解析に失敗しました。正しいJSONファイルか確認してください。');
+        } finally {
+            // 次回同じファイルを選択してもイベントが発火するように入力をクリア
+            inputElement.value = "";
+        }
+    };
+
+    // テキストとしてファイル読み込みを開始
+    reader.readAsText(file);
+}

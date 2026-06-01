@@ -507,3 +507,93 @@ body {
 .btn-sample-simple:active {
     transform: translateY(0);
 }
+/* ==========================================================================
+   フッターエリア（データマネジメントパネル）
+   ========================================================================== */
+.footer {
+    max-width: 1200px;
+    margin: 20px auto 0;
+    background: linear-gradient(135deg, #09203f 0%, #537895 100%); /* ヘッダーと同一のグラデーション */
+    color: #ffffff;
+    padding: 24px 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px; /* container と同じ角丸 */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3); /* container と同じシャドウ */
+}
+
+.footer-inner {
+    display: table;
+    width: 100%;
+}
+
+.footer-desc,
+.footer-actions {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.footer-desc {
+    font-size: 13px;
+    opacity: 0.85;
+    text-align: left;
+    line-height: 1.5;
+    padding-right: 20px;
+}
+
+.footer-actions {
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* フッター内専用のボタンデザイン（インダストリアル・セミフラット） */
+.btn-footer {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 10px;
+}
+
+.btn-footer:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-footer:active {
+    transform: translateY(0);
+}
+
+/* スマートフォン環境（横幅が狭い場合）のレイアウト崩れ対策 */
+@media (max-width: 768px) {
+    .footer {
+        padding: 20px;
+    }
+    .footer-inner {
+        display: block;
+    }
+    .footer-desc,
+    .footer-actions {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 0;
+    }
+    .footer-desc {
+        margin-bottom: 15px;
+    }
+    .btn-footer {
+        width: 100%;
+        margin: 6px 0 0 0;
+        justify-content: center;
+        padding: 12px;
+    }
+}

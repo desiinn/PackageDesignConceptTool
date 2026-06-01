@@ -212,6 +212,17 @@
         </div>
     </div>
 
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-desc">入力途中のデータを保存したり、過去の設定ファイルを読み込んで再編集することができます。</div>
+            <div class="footer-actions">
+                <button class="btn btn-footer" type="button" onclick="exportToJSON()">記入データを書き出し</button>
+                <button class="btn btn-footer" type="button" onclick="document.getElementById('jsonImportInput').click()">jsonデータを読み込み</button>
+            </div>
+        </div>
+        <input id="jsonImportInput" type="file" accept="application/json" onchange="importFromJSON(this)" hidden>
+    </footer>
+
     <script src="script.js"></script>
     <!-- Info modal -->
     <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle" hidden>
