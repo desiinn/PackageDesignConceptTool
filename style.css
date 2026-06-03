@@ -522,13 +522,16 @@ body {
 }
 
 .footer-inner {
-    display: table;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
     width: 100%;
 }
 
 .footer-desc,
 .footer-actions {
-    display: table-cell;
+    display: block;
     vertical-align: middle;
 }
 
@@ -541,14 +544,17 @@ body {
 }
 
 .footer-actions {
-    text-align: right;
-    white-space: nowrap;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 /* フッター内専用のボタンデザイン（インダストリアル・セミフラット） */
 .btn-footer {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 10px 18px;
     font-size: 13px;
@@ -578,7 +584,8 @@ body {
         padding: 20px;
     }
     .footer-inner {
-        display: block;
+        flex-direction: column;
+        align-items: stretch;
     }
     .footer-desc,
     .footer-actions {
@@ -590,10 +597,17 @@ body {
     .footer-desc {
         margin-bottom: 15px;
     }
+    .footer-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
     .btn-footer {
         width: 100%;
-        margin: 6px 0 0 0;
+        margin: 0;
         justify-content: center;
         padding: 12px;
+        min-width: 0;
     }
 }

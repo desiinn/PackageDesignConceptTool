@@ -216,8 +216,14 @@
         <div class="footer-inner">
             <div class="footer-desc">入力途中のデータを保存したり、過去の設定ファイルを読み込んで再編集することができます。</div>
             <div class="footer-actions">
-                <button class="btn btn-footer" type="button" onclick="exportToJSON()">記入データを書き出し</button>
-                <button class="btn btn-footer" type="button" onclick="document.getElementById('jsonImportInput').click()">jsonデータを読み込み</button>
+                <button class="btn btn-footer" type="button" onclick="exportToJSON()">
+                    <i class="fas fa-download" aria-hidden="true"></i>
+                    記入したデータを保存
+                </button>
+                <button class="btn btn-footer" type="button" onclick="document.getElementById('jsonImportInput').click()">
+                    <i class="fas fa-folder-open" aria-hidden="true"></i>
+                    保存したデータを読み込む
+                </button>
             </div>
         </div>
         <input id="jsonImportInput" type="file" accept="application/json" onchange="importFromJSON(this)" hidden>
